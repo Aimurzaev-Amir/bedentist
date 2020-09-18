@@ -21,9 +21,9 @@ nav {
 }
 header {
   background-image: url(img/Background.png);
-  background-color: rgba (0, 0, 0, 0.5);
   background-size: 100%;
   background-repeat: no-repeat;
+  height: 100vh;
 }
 
 .menu {
@@ -44,7 +44,6 @@ header {
   font-size: 18px;
   margin-top: 35px;
   margin-bottom: 35px;
-  margin-right: 20px;
 }
 .menu li a:hover {
   padding-bottom: 34px;
@@ -74,12 +73,10 @@ header {
 .wrapper {
   margin: 0 auto;
   max-width: 1100px;
-  width: 100%;
 }
 .intro {
   display: flex;
   margin-top: 130px;
-  width: 100%;
   color: white;
 }
 .intro-text h2 {
@@ -173,10 +170,17 @@ header {
   text-decoration: none;
   padding-left: 10px;
 }
+.number {
+  white-space: nowrap;
+}
 .card .number-container {
   display: flex;
   margin-top: 18px;
   margin-bottom: 37px;
+}
+.number-container img {
+  width: 40px;
+  height: 40px;
 }
 .card p.num {
   font-size: 28px;
@@ -201,6 +205,8 @@ header {
   background-color: #f7fafb;
 }
 .welcome-text {
+  padding-top: 100px;
+  margin-bottom: 48px;
   text-align: center;
 }
 .welcome-text h3 {
@@ -208,13 +214,11 @@ header {
   line-height: 45px;
   color: #2a93c9;
   font-weight: 400;
-  padding-top: 100px;
 }
 .welcome-text p {
   font-size: 18px;
   line-height: 150%;
   font-weight: 300;
-  margin-bottom: 48px;
 }
 .welcome-container {
   display: flex;
@@ -229,8 +233,7 @@ header {
   height: auto;
   padding: 26px 40px;
   background: #fff;
-  box-shadow: -4px -4px 100px rgba(0, 0, 0, 0.08),
-    4px 4px 100px rgba(0, 0, 0, 0.08);
+  box-shadow: -4px -4px 100px rgba(0, 0, 0, 0.08), 4px 4px 100px rgba(0, 0, 0, 0.08);
 }
 .welcome-info h4 {
   font-size: 24px;
@@ -307,6 +310,7 @@ header {
 }
 .works-bg {
   background: #f7fafb;
+  padding-bottom: 20px;
 }
 .works .items-text h2 {
   display: inline-flex;
@@ -321,6 +325,7 @@ header {
 .works .items {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  text-align: center;
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 54px;
   grid-row-gap: 41px;
@@ -377,14 +382,14 @@ header {
   color: #a4a8aa;
   margin-left: 16px;
 }
-.layer-contacts{
+.layer-contacts {
   margin-bottom: 20px;
 }
 .layer-contacts .layer-number {
   display: flex;
   margin-top: 18px;
 }
-.layer-contacts .layer-number img{
+.layer-contacts .layer-number img {
   max-width: 9px;
   max-height: 15px;
 }
@@ -392,7 +397,7 @@ header {
   display: flex;
   margin-top: 10px;
 }
-.layer-contacts .layer-email img{
+.layer-contacts .layer-email img {
   max-width: 15px;
   max-height: 13px;
 }
@@ -413,8 +418,7 @@ header {
   padding-left: 70px;
   padding-right: 70px;
   background-color: #fff;
-  box-shadow: 4px -4px 100px rgba(0, 0, 0, 0.08),
-    -4px 4px 100px rgba(0, 0, 0, 0.08);
+  box-shadow: 4px -4px 100px rgba(0, 0, 0, 0.08), -4px 4px 100px rgba(0, 0, 0, 0.08);
   padding-bottom: 71px;
 }
 .registration-form h2 {
@@ -467,7 +471,6 @@ header {
 .ant-carousel {
   margin-top: 80px;
   background-color: white;
-  
 }
 .ant-carousel-element {
   width: 350px;
@@ -548,16 +551,14 @@ div.ant-carousel-arrow-left {
   left: -40px;
   top: 40%;
   display: block;
-  background: url("http://pvbk.spb.ru/inc/carousel/ant-files/ant-arrow-left.png")
-    no-repeat;
+  background: url("http://pvbk.spb.ru/inc/carousel/ant-files/ant-arrow-left.png") no-repeat;
 }
 
 div.ant-carousel-arrow-right {
   right: -40px;
   top: 40%;
   display: block;
-  background: url("http://pvbk.spb.ru/inc/carousel/ant-files/ant-arrow-right.png")
-    no-repeat;
+  background: url("http://pvbk.spb.ru/inc/carousel/ant-files/ant-arrow-right.png") no-repeat;
 }
 
 div.ant-carousel-arrow-left:hover {
@@ -662,37 +663,56 @@ hr {
   line-height: 16px;
 }
 
-
-
-
-
-@media screen and (min-width: 761px) and (max-width: 1099px) {
+@media screen and (min-width: 769px) and (max-width: 1099px) {
   header {
-    max-height: 500px;
+    height: unset;
+  }
+  .menu {
+    padding: 30px 30px 0 30px;
   }
   .menu li a.all {
-  display: none;
+    display: none;
+  }
+  .intro-text {
+    padding-left: 58px;
   }
   .info {
     margin-top: -70px;
   }
+  .service {
+    padding: 0 30px 0 30px;
+  }
   .ant-carousel {
     max-width: 735px;
-    margin: auto;
+    margin: 70px auto 0 auto;
+  }
+  .works {
+    padding: 0 30px 0 30px;
+  }
+  .works .items {
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+  }
+  .news {
+    padding: 0 30px 0 30px;
+  }
+  .footerOverlay {
+    padding: 0 30px 0 30px;
+  }
+  .footer-end-bg {
+    padding: 0 30px 0 30px;
   }
 }
 
-
-
-
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 768px) {
   header {
-    background-size: unset;
-    background-position: fixed;
+    background-size: cover;
     background-position-x: 80%;
     padding-left: 20px;
     padding-right: 20px;
-    max-height: 800px;
+  }
+  .info {
+    margin-top: 0;
   }
   .mobile-intro {
     display: flex;
@@ -707,7 +727,6 @@ hr {
   img.logo-mobile {
     width: 141px;
     height: 21px;
-    padding-right: 50px;
   }
   img.toggle {
     z-index: 19;
@@ -722,7 +741,7 @@ hr {
   }
   #checkbox-menu:checked + label .touch {
     z-index: 9;
-    background-color: rgba(0, 0, 0, 0.8); 
+    background-color: rgba(0, 0, 0, 0.8);
     position: fixed;
     right: 0;
     top: 0;
@@ -814,9 +833,10 @@ hr {
   }
   .intro-buttons a.intro-button:first-child {
     margin-bottom: 11px;
+    white-space: nowrap;
   }
   .intro-buttons {
-    margin-bottom: 85px;
+    margin-bottom: 100px;
   }
   .intro-info {
     display: grid;
@@ -825,17 +845,20 @@ hr {
     grid-row-gap: 37px;
     padding: 38px 40px;
   }
+  .welcome-text {
+    padding-top: 37px;
+    margin-bottom: 35px;
+    text-align: center;
+  }
   .welcome-text h3 {
     font-size: 28px;
     padding-left: 10%;
     padding-right: 10%;
-    padding-top: 37px;
   }
   .welcome-text p {
     font-size: 16px;
     padding-left: 10%;
     padding-right: 10%;
-    margin-bottom: 35px;
   }
   .welcome-container .welcome-info {
     margin-left: 5%;
@@ -843,8 +866,11 @@ hr {
     margin-bottom: 30px;
     height: 400px;
   }
-  .welcome-container .welcome-image {
-    display: none;
+  .welcome-image {
+    margin-right: 0px;
+  }
+  .welcome-image img {
+    max-width: 500px;
   }
   .serv-cards {
     color: white;
@@ -866,7 +892,7 @@ hr {
   }
   .serv-card p {
     margin-bottom: 39px;
-  } 
+  }
   .works .items-text h2 {
     margin-left: 50px;
     font-size: 28px;
@@ -879,14 +905,14 @@ hr {
     flex-direction: column;
     margin-left: 50px;
     margin-right: 50px;
-  }  
-  .works .item{
+  }
+  .works .item {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-top: 10px;
   }
-  .works .items-links:first-child{
+  .works .items-links:first-child {
     margin-top: 0px;
   }
   .works .item img {
@@ -913,12 +939,19 @@ hr {
   .layers .layers-text p {
     display: none;
   }
-  .layers .ant-carousel{
-    max-width: 295px;
-    /*margin: auto;*/
+  .layers .ant-carousel,
+  .news .ant-carousel {
+    max-width: 650px;
   }
-  .registration img {
-    display: none;
+  #first .ant-carousel-element {
+    max-width: 310px;
+  }
+  #second .ant-carousel-element {
+    max-width: 310px;
+  }
+  .registration {
+    display: flex;
+    align-items: flex-end;
   }
   .registration-form {
     margin-left: 5%;
@@ -960,16 +993,16 @@ hr {
     grid-column-end: 3;
     padding-bottom: 13px;
   }
-  .items-links:first-child{
+  .items-links:first-child {
     grid-column: 1;
   }
-  .items-links:nth-child(2){
+  .items-links:nth-child(2) {
     grid-column: 2;
   }
-  .items-links.reverse:first-child{
+  .items-links.reverse:first-child {
     grid-column: 2;
   }
-  .items-links.reverse:nth-child(2){
+  .items-links.reverse:nth-child(2) {
     grid-column: 1;
   }
   .items-links .contacts-info {
@@ -981,18 +1014,30 @@ hr {
   .footer-block .logo-info p {
     display: none;
   }
-  .footer-end{
+  .footer-end {
     display: flex;
     justify-content: space-between;
   }
   .footer-end p {
-  padding-right: 20px;
-  padding-left: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .ant-carousel {
+    margin-top: 38px;
+  }
 }
-.ant-carousel {
-  margin-top: 38px;
+@media screen and (max-width: 500px) {
+  .intro-buttons {
+    margin-bottom: 85px;
+  }
+  .welcome-container .welcome-image {
+    display: none;
+  }
+  .layers .ant-carousel,
+  .news .ant-carousel {
+    max-width: 295px;
+  }
+  .registration img {
+    display: none;
+  }
 }
-
-}
-
-

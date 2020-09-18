@@ -383,7 +383,7 @@ Ant.initialize = function(that) {
 		that.options.auto = false; // отключить автопркрутку
 	}
 	else if(that.options.auto) {   // инициализация автопрокруки
-		setAutoScroll();
+		// setAutoScroll();
 		// Остановка прокрутки при наведении мыши на элемент
 		that.crslList.addEventListener('mouseenter', function() {
     	clearInterval(that.autoScroll)
