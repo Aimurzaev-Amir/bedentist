@@ -1,3 +1,12 @@
+// Setting the viewport height
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty("--vh", `${vh}px`);
+// on viewport height change
+window.addEventListener("resize", () => {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+});
+
 function Ant(crslId) {
 
 	let id = document.getElementById(crslId);

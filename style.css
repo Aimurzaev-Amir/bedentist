@@ -23,7 +23,8 @@ header {
   background-image: url(img/Background.png);
   background-size: 100%;
   background-repeat: no-repeat;
-  height: 100vh;
+  /* height: 100vh; */
+  height: calc(var(--vh, 1vh) * 100);
 }
 
 .menu {
