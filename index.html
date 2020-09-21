@@ -12,26 +12,36 @@
     <title>BeDentist</title>
   </head>
   <body>
-    <header>
+    <header id="Home">
       <nav>
-        <input type="checkbox" name="" id="checkbox-menu" />
-        <label for="checkbox-menu">
-          <div class="mobile-intro">
-            <img class="logo-mobile" src="img/mobile-logo.png" alt="" />
-            <span class="number">8 727 242 42 42</span>
-            <img class="toggle" src="img/toggle.png" alt="" />
-          </div>
-          <ul class="menu touch">
-            <li class="logo"><img src="img/logo 2.png" alt="" /></li>
-            <li><a href="#about">Home</a></li>
-            <li><a href="#app">Услуги</a></li>
-            <li><a href="#How it Work">Доктора</a></li>
-            <li><a href="#agents">Новости</a></li>
-            <li><a href="#">Контакты</a></li>
-            <li><a class="review" href="#">Отзывы</a></li>
-            <li><a class="all" href="">Записаться на прием</a></li>
-          </ul>
-        </label>
+        <div class="mobile-intro">
+          <img class="logo-mobile" src="img/mobile-logo.png" alt="" />
+          <span class="number">8 727 242 42 42</span>
+          <button id="burger" class="open-main-nav">
+            <span class="burger"></span>
+          </button>
+          <nav class="main-nav" id="main-nav">
+            <ul>
+              <li><a class="navLink" href="#Home">Home</a></li>
+              <li><a class="navLink" href="#service">Услуги</a></li>
+              <li><a class="navLink" href="#doctors">Доктора</a></li>
+              <li><a class="navLink" href="#news">Новости</a></li>
+              <li><a class="navLink" href="#contacts">Контакты</a></li>
+              <li><a class="navLink" href="#review">Отзывы</a></li>
+              <li><a class="navLink" href="#registration">Записаться</a></li>
+            </ul>
+          </nav>
+        </div>
+        <ul class="menu">
+          <li class="logo"><img src="img/logo 2.png" alt="" /></li>
+          <li><a class="navLink" href="#Home">Home</a></li>
+          <li><a class="navLink" href="#service">Услуги</a></li>
+          <li><a class="navLink" href="#doctors">Доктора</a></li>
+          <li><a class="navLink" href="#news">Новости</a></li>
+          <li><a class="navLink" href="#contacts">Контакты</a></li>
+          <li><a class="review navLink" href="#review">Отзывы</a></li>
+          <li><a class="all navLink" href="#registration">Записаться на прием</a></li>
+        </ul>
       </nav>
       <div class="intro wrapper">
         <div class="intro-text">
@@ -42,14 +52,14 @@
             как, они существенно влияют на лечение пациента.
           </p>
           <div class="intro-buttons">
-            <a class="intro-button" href="">Просмотреть услуги</a>
-            <a class="intro-button" href="">Записаться</a>
+            <a class="intro-button" href="#service">Просмотреть услуги</a>
+            <a class="intro-button" href="#registration">Записаться</a>
           </div>
         </div>
       </div>
     </header>
     <main>
-      <div class="info wrapper">
+      <div class="info wrapper" id="contacts">
         <div class="intro-info">
           <div class="card">
             <h4>График работы</h4>
@@ -74,7 +84,7 @@
             </p>
             <div class="timetable">
               <img src="img/calendar 1.png" alt="" />
-              <a href="">Расписание</a>
+              <p>Расписание</p>
             </div>
           </div>
           <div class="card">
@@ -110,8 +120,25 @@
               Наша клиника осуществляет такие процедуры, как: лечение, имплантацию, отбеливание
               зубов, исправление прикуса и многое другое.
             </p>
-            <button class="welcome-button" href="#">Зарегистрироваться</button>
+            <a href="#registration">
+              <button class="welcome-button">Зарегистрироваться</button>
+            </a>
           </div>
+        </div>
+      </div>
+      <div class="registrationCalendar">
+        <div class="calendarOptios">
+          <div class="setDoctor">
+            <label for="docName">Выберите стамотолога:</label>
+            <input type="text" name="docName" />
+          </div>
+          <div class="calendarMonth">
+            <label for="docName">Выберите стамотолога:</label>
+            <input type="text" name="docName" />
+          </div>
+        </div>
+        <div class="calendar">
+          
         </div>
       </div>
       <div class="service">
@@ -151,7 +178,7 @@
           </div>
         </div>
       </div>
-      <div class="works-bg">
+      <div class="works-bg" id="service">
         <div class="works wrapper">
           <div class="items-text">
             <h2>Наши услуги</h2>
@@ -198,7 +225,7 @@
               <p>Удаление зубов</p>
             </div>
           </div>
-          <div class="layers">
+          <div class="layers" id="doctors">
             <div class="layers-text">
               <h2>Наши специалисты</h2>
               <p>
@@ -304,55 +331,63 @@
               <div class="ant-carousel-dots"></div>
             </div>
           </div>
-          <div class="registration">
+          <div class="registration" id="registration">
             <img src="img/registrator.png" alt="" />
-            <div class="registration-form">
+            <form class="registration-form" id="registration-form">
               <h2>Записаться на прием</h2>
               <input type="text" placeholder="Выберите услугу" />
               <input type="text" placeholder="Полное имя" />
               <input type="text" placeholder="Телефон" />
               <input type="text" placeholder="Дата записи:" />
-              <a href="#" class="send">Отправить заявку</a>
-            </div>
+              <button id="send" class="send">Отправить заявку</button>
+            </form>
           </div>
         </div>
-
-        <div class="news wrapper">
-          <div class="news-title">
-            <h2>Последние новости</h2>
+        <div class="messageSend">
+          <div class="messageWindow sendDoneWindow">
+            <img src="img/done.png" alt="" class="doneImage img" id="doneImage" />
+            <h4>Спасибо</h4>
+            <div class=loading" id="loading">
+            <p>Отправка вашей заявки ...</p>
+            <img class="loadingImage img" src="img/loading.gif" alt="" />
           </div>
-          <div class="ant-carousel wrapper" id="second">
-            <div class="ant-carousel-hider">
-              <div class="ant-carousel-list">
-                <div class="ant-carousel-element">
-                  <img src="img/cor-3.png" alt="0" />
-                  <p>
-                    Швейцария возглавила рейтинг стран с самыми комфортными условиями для
-                    стоматологов
-                  </p>
-                  <p class="date">СЕНТЯБРЬ 12, 2019</p>
-                </div>
-                <div class="ant-carousel-element">
-                  <img src="img/cor-1.png" alt="1" />
-                  <p>Гиперчувствительность дентина: этиология и методы диагностики</p>
-                  <p class="date">СЕНТЯБРЬ 12, 2019</p>
-                </div>
-                <div class="ant-carousel-element">
-                  <img src="img/cor-2.png" alt="2" />
-                  <p>Пародонтит связывают с повышенным риском гипертонии у больных</p>
-                  <p class="date">СЕНТЯБРЬ 12, 2019</p>
-                </div>
-                <div class="ant-carousel-element">
-                  <img src="img/cor-3.png" alt="3" />
-                  <p>Пародонтит связывают с повышенным риском гипертонии у больных</p>
-                  <p class="date">СЕНТЯБРЬ 12, 2019</p>
-                </div>
+        </div>
+      </div>
+
+      <div class="news wrapper" id="news">
+        <div class="news-title">
+          <h2>Последние новости</h2>
+        </div>
+        <div class="ant-carousel wrapper" id="second">
+          <div class="ant-carousel-hider">
+            <div class="ant-carousel-list">
+              <div class="ant-carousel-element">
+                <img src="img/cor-3.png" alt="0" />
+                <p>
+                  Швейцария возглавила рейтинг стран с самыми комфортными условиями для стоматологов
+                </p>
+                <p class="date">СЕНТЯБРЬ 12, 2019</p>
+              </div>
+              <div class="ant-carousel-element">
+                <img src="img/cor-1.png" alt="1" />
+                <p>Гиперчувствительность дентина: этиология и методы диагностики</p>
+                <p class="date">СЕНТЯБРЬ 12, 2019</p>
+              </div>
+              <div class="ant-carousel-element">
+                <img src="img/cor-2.png" alt="2" />
+                <p>Пародонтит связывают с повышенным риском гипертонии у больных</p>
+                <p class="date">СЕНТЯБРЬ 12, 2019</p>
+              </div>
+              <div class="ant-carousel-element">
+                <img src="img/cor-3.png" alt="3" />
+                <p>Пародонтит связывают с повышенным риском гипертонии у больных</p>
+                <p class="date">СЕНТЯБРЬ 12, 2019</p>
               </div>
             </div>
-            <div class="ant-carousel-arrow-left"></div>
-            <div class="ant-carousel-arrow-right"></div>
-            <div class="ant-carousel-dots"></div>
           </div>
+          <div class="ant-carousel-arrow-left"></div>
+          <div class="ant-carousel-arrow-right"></div>
+          <div class="ant-carousel-dots"></div>
         </div>
       </div>
     </main>
@@ -368,12 +403,12 @@
           </div>
           <div class="items-links">
             <h6>Меню</h6>
-            <a href="#">Home</a>
-            <a href="#">Услуги</a>
-            <a href="#">Доктора</a>
-            <a href="#">Новости</a>
-            <a href="#">Контакты</a>
-            <a href="#">Отзывы</a>
+            <a href="#Home">Home</a>
+            <a href="#service">Услуги</a>
+            <a href="#doctors">Доктора</a>
+            <a href="#news">Новости</a>
+            <a href="#contacts">Контакты</a>
+            <a href="#review">Отзывы</a>
           </div>
           <div class="items-links">
             <h6>Мы находимся</h6>
@@ -389,16 +424,16 @@
           </div>
           <div class="items-links">
             <h6>Услуги</h6>
-            <a href="#">Лечение зубов</a>
-            <a href="#">Имплантация зубов</a>
-            <a href="#">Эстетическая стоматология</a>
-            <a href="#">Исправление прикуса</a>
-            <a href="#">Отбеливание зубов</a>
-            <a href="#">Зубные протезы</a>
-            <a href="#">Гигиена полости рта</a>
-            <a href="#">Лечение десен</a>
-            <a href="#">Дентальная томография зубов</a>
-            <a href="#">Удаление зубов</a>
+            <a href="#service">Лечение зубов</a>
+            <a href="#service">Имплантация зубов</a>
+            <a href="#service">Эстетическая стоматология</a>
+            <a href="#service">Исправление прикуса</a>
+            <a href="#service">Отбеливание зубов</a>
+            <a href="#service">Зубные протезы</a>
+            <a href="#service">Гигиена полости рта</a>
+            <a href="#service">Лечение десен</a>
+            <a href="#service">Дентальная томография зубов</a>
+            <a href="#service">Удаление зубов</a>
           </div>
         </div>
       </div>
@@ -411,5 +446,6 @@
       </div>
     </footer>
     <script src="script.js"></script>
+    <script src="ant.js"></script>
   </body>
 </html>

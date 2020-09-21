@@ -7,468 +7,116 @@ window.addEventListener("resize", () => {
   document.documentElement.style.setProperty("--vh", `${vh}px`);
 });
 
-function Ant(crslId) {
+// mobile main menu
+let burger = document.getElementById("burger");
+let nav = document.getElementById("main-nav");
+let body = document.querySelector("body");
+let navLink = document.getElementsByClassName("navLink");
 
-	let id = document.getElementById(crslId);
-	if(id) {
-		this.crslRoot = id
-	}
-	else {
-		this.crslRoot = document.querySelector('.ant-carousel')
-	};
+burger.addEventListener("click", function (e) {
+  this.classList.toggle("is-open");
+  nav.classList.toggle("is-open");
+  body.classList.toggle("bodyFixed");
+});
 
-	// Carousel objects
-	this.crslList = this.crslRoot.querySelector('.ant-carousel-list');
-	this.crslElements = this.crslList.querySelectorAll('.ant-carousel-element');
-	this.crslElemFirst = this.crslList.querySelector('.ant-carousel-element');
-	this.leftArrow = this.crslRoot.querySelector('div.ant-carousel-arrow-left');
-	this.rightArrow = this.crslRoot.querySelector('div.ant-carousel-arrow-right');
-	this.indicatorDots = this.crslRoot.querySelector('div.ant-carousel-dots');
+for (var i = 0; i < navLink.length; i++) {
+  navLink[i].addEventListener("click", function (e) {
+    body.classList.remove("bodyFixed");
+    burger.classList.remove("is-open");
+    nav.classList.remove("is-open");
+  });
+}
 
-	// Initialization
-	this.options = Ant.defaults;
-	Ant.initialize(this)
-};
+let doneImage = document.getElementById("doneImage");
+let send = document.getElementById("send");
+let loading = document.getElementById("loading");
+let messageSend = document.querySelector(".messageSend");
+send.addEventListener("click", function (e) {
+  e.preventDefault();
+  messageSend.style.display = "block";
+  let messageWindow = document.querySelector(".messageWindow");
+  var positionInfo = messageWindow.getBoundingClientRect();
+  var height = positionInfo.height;
+  var width = positionInfo.width;
+  // Setting the viewport height
+  let halfvh = (window.innerHeight / 2 - height / 2) * 0.01;
+  let halfvw = (window.innerWidth / 2 - width / 2) * 0.01;
+  document.documentElement.style.setProperty("--halfvw", `${halfvw}px`);
+  document.documentElement.style.setProperty("--halfvh", `${halfvh}px`);
+  // on viewport height change
+  window.addEventListener("resize", () => {
+    let halfvh = (window.innerHeight / 2 - height / 2) * 0.01;
+    let halfvw = (window.innerWidth / 2 - width / 2) * 0.01;
+    document.documentElement.style.setProperty("--halfvw", `${halfvw}px`);
+    document.documentElement.style.setProperty("--halfvh", `${halfvh}px`);
+  });
+  setTimeout(function () {
+    doneImage.style.display = "block";
+    loading.style.display = "none";
+    document.getElementById("registration-form").reset();
+    setTimeout(function () {
+      messageSend.style.display = "none";
+    }, 1000);
+  }, 2000);
+});
 
-Ant.defaults = {
-
-	// Default options for the carousel
-	elemVisible: 3, // Кол-во отображаемых элементов в карусели
-	loop: true,     // Бесконечное зацикливание карусели 
-	auto: true,     // Автоматическая прокрутка
-	interval: 5000, // Интервал между прокруткой элементов (мс)
-	speed: 750,     // Скорость анимации (мс)
-	touch: true,    // Прокрутка  прикосновением
-	arrows: true,   // Прокрутка стрелками
-	dots: true      // Индикаторные точки
-};
-
-Ant.prototype.elemPrev = function(num) {
-	num = num || 1;
-
-	if(this.options.dots) this.dotOn(this.currentElement);
-	this.currentElement -= num;
-	if(this.currentElement < 0) this.currentElement = this.dotsVisible-1;
-	if(this.options.dots) this.dotOff(this.currentElement);
-
-	if(!this.options.loop) {  // сдвиг вправо без цикла
-		this.currentOffset += this.elemWidth*num;
-		this.crslList.style.marginLeft = this.currentOffset + 'px';
-		if(this.currentElement == 0) {
-			this.leftArrow.style.display = 'none'; this.touchPrev = false
-		}
-		this.rightArrow.style.display = 'block'; this.touchNext = true
-	}
-	else {                    // сдвиг вправо с циклом
-		let elm, buf, this$ = this;
-		for(let i=0; i<num; i++) {
-			elm = this.crslList.lastElementChild;
-			buf = elm.cloneNode(true);
-			this.crslList.insertBefore(buf, this.crslList.firstElementChild);
-			this.crslList.removeChild(elm)
-		};
-		this.crslList.style.marginLeft = '-' + this.elemWidth*num + 'px';
-		let compStyle = window.getComputedStyle(this.crslList).marginLeft;
-		this.crslList.style.cssText = 'transition:margin '+this.options.speed+'ms ease;';
-		this.crslList.style.marginLeft = '0px';
-		setTimeout(function() {
-			this$.crslList.style.cssText = 'transition:none;'
-		}, this.options.speed)
-	}
-};
-
-Ant.prototype.elemNext = function(num) {
-	num = num || 1;
-
-	if(this.options.dots) this.dotOn(this.currentElement);
-	this.currentElement += num;
-	if(this.currentElement >= this.dotsVisible) this.currentElement = 0;
-	if(this.options.dots) this.dotOff(this.currentElement);
-
-	if(!this.options.loop) {  // сдвиг влево без цикла
-		this.currentOffset -= this.elemWidth*num;
-		this.crslList.style.marginLeft = this.currentOffset + 'px';
-		if(this.currentElement == this.dotsVisible-1) {
-			this.rightArrow.style.display = 'none'; this.touchNext = false
-		}
-		this.leftArrow.style.display = 'block'; this.touchPrev = true
-	}
-	else {                    // сдвиг влево с циклом
-		let elm, buf, this$ = this;
-		this.crslList.style.cssText = 'transition:margin '+this.options.speed+'ms ease;';
-		this.crslList.style.marginLeft = '-' + this.elemWidth*num + 'px';
-		setTimeout(function() {
-			this$.crslList.style.cssText = 'transition:none;';
-			for(let i=0; i<num; i++) {
-				elm = this$.crslList.firstElementChild;
-				buf = elm.cloneNode(true); this$.crslList.appendChild(buf);
-				this$.crslList.removeChild(elm)
-			};
-			this$.crslList.style.marginLeft = '0px'
-		}, this.options.speed)
-	}
-};
-
-Ant.prototype.dotOn = function(num) {
-	this.indicatorDotsAll[num].style.cssText = 'background-color:#BBB; cursor:pointer;'
-};
-
-Ant.prototype.dotOff = function(num) {
-	this.indicatorDotsAll[num].style.cssText = 'background-color:#556; cursor:default;'
-};
-
-Ant.initialize = function(that) {
-
-	// Constants
-	that.elemCount = that.crslElements.length; // Количество элементов
-	that.dotsVisible = that.elemCount;         // Число видимых точек
-	let elemStyle = window.getComputedStyle(that.crslElemFirst);
-	that.elemWidth = that.crslElemFirst.offsetWidth +  // Ширина элемента (без margin)
-	  parseInt(elemStyle.marginLeft) + parseInt(elemStyle.marginRight);
-
-	// Variables
-	that.currentElement = 0; that.currentOffset = 0;
-	that.touchPrev = true; that.touchNext = true;
-	let xTouch, yTouch, xDiff, yDiff, stTime, mvTime;
-	let bgTime = getTime();
-
-	// Functions
-	function getTime() {
-		return new Date().getTime();
-	};
-	function setAutoScroll() {
-		that.autoScroll = setInterval(function() {
-			let fnTime = getTime();
-			if(fnTime - bgTime + 10 > that.options.interval) {
-				bgTime = fnTime; that.elemNext()
-			}
-		}, that.options.interval)
-	};
-
-	// Start initialization
-	if(that.elemCount <= that.options.elemVisible) {   // Отключить навигацию
-		that.options.auto = false; that.options.touch = false;
-		that.options.arrows = false; that.options.dots = false;
-		that.leftArrow.style.display = 'none'; that.rightArrow.style.display = 'none'
-	};
-
-	if(!that.options.loop) {       // если нет цикла - уточнить количество точек
-		that.dotsVisible = that.elemCount - that.options.elemVisible + 1;
-		that.leftArrow.style.display = 'none';  // отключить левую стрелку
-		that.touchPrev = false;    // отключить прокрутку прикосновением вправо
-		that.options.auto = false; // отключить автопркрутку
-	}
-	else if(that.options.auto) {   // инициализация автопрокруки
-		setAutoScroll();
-		// Остановка прокрутки при наведении мыши на элемент
-		that.crslList.addEventListener('mouseenter', function() {
-    	clearInterval(that.autoScroll)
-    }, false);
-		that.crslList.addEventListener('mouseleave', setAutoScroll, false)
-	};
-
-	if(that.options.touch) {   // инициализация прокрутки прикосновением
-		that.crslList.addEventListener('touchstart', function(e) {
-			xTouch = parseInt(e.touches[0].clientX);
-			yTouch = parseInt(e.touches[0].clientY);
-			stTime = getTime()
-		}, false);
-		that.crslList.addEventListener('touchmove', function(e) {
-			if(!xTouch || !yTouch) return;
-			xDiff = xTouch - parseInt(e.touches[0].clientX);
-			yDiff = yTouch - parseInt(e.touches[0].clientY);
-			mvTime = getTime();
-			if(Math.abs(xDiff) > 15 && Math.abs(xDiff) > Math.abs(yDiff) && mvTime - stTime < 75) {
-				stTime = 0;
-				if(that.touchNext && xDiff > 0) {
-					bgTime = mvTime; that.elemNext()
-				}
-				else if(that.touchPrev && xDiff < 0) {
-					bgTime = mvTime; that.elemPrev()
-				}
-			}
-		}, false)
-	};
-
-	if(that.options.arrows) {  // инициализация стрелок
-		if(!that.options.loop) that.crslList.style.cssText =
-      'transition:margin '+that.options.speed+'ms ease;';
-		that.leftArrow.addEventListener('click', function() {
-			let fnTime = getTime();
-			if(fnTime - bgTime > that.options.speed) {
-				bgTime = fnTime; that.elemPrev()
-			}
-		}, false);
-		that.rightArrow.addEventListener('click', function() {
-			let fnTime = getTime();
-			if(fnTime - bgTime > that.options.speed) {
-				bgTime = fnTime; that.elemNext()
-			}
-		}, false)
-	}
-	else {
-		that.leftArrow.style.display = 'none';
-    that.rightArrow.style.display = 'none'
-	};
-
-	if(that.options.dots) {  // инициализация индикаторных точек
-		let sum = '', diffNum;
-		for(let i=0; i<that.dotsVisible; i++) {
-			sum += '<span class="ant-dot"></span>'
-		};
-		that.indicatorDots.innerHTML = sum;
-		that.indicatorDotsAll = that.crslRoot.querySelectorAll('span.ant-dot');
-		// Назначаем точкам обработчик события 'click'
-		for(let n=0; n<that.dotsVisible; n++) {
-			that.indicatorDotsAll[n].addEventListener('click', function() {
-				diffNum = Math.abs(n - that.currentElement);
-				if(n < that.currentElement) {
-					bgTime = getTime(); that.elemPrev(diffNum)
-				}
-				else if(n > that.currentElement) {
-					bgTime = getTime(); that.elemNext(diffNum)
-				}
-				// Если n == that.currentElement ничего не делаем
-			}, false)
-		};
-		that.dotOff(0);  // точка[0] выключена, остальные включены
-		for(let i=1; i<that.dotsVisible; i++) {
-			that.dotOn(i)
-		}
-	}
-};
-
-new Ant("first");
-
-function Ant(crslId) {
-
-	let id = document.getElementById(crslId);
-	if(id) {
-		this.crslRoot = id
-	}
-	else {
-		this.crslRoot = document.querySelector('.ant-carousel')
-	};
-
-	// Carousel objects
-	this.crslList = this.crslRoot.querySelector('.ant-carousel-list');
-	this.crslElements = this.crslList.querySelectorAll('.ant-carousel-element');
-	this.crslElemFirst = this.crslList.querySelector('.ant-carousel-element');
-	this.leftArrow = this.crslRoot.querySelector('div.ant-carousel-arrow-left');
-	this.rightArrow = this.crslRoot.querySelector('div.ant-carousel-arrow-right');
-	this.indicatorDots = this.crslRoot.querySelector('div.ant-carousel-dots');
-
-	// Initialization
-	this.options = Ant.defaults;
-	Ant.initialize(this)
-};
-
-Ant.defaults = {
-
-	// Default options for the carousel
-	elemVisible: 3, // Кол-во отображаемых элементов в карусели
-	loop: true,     // Бесконечное зацикливание карусели 
-	auto: true,     // Автоматическая прокрутка
-	interval: 5000, // Интервал между прокруткой элементов (мс)
-	speed: 750,     // Скорость анимации (мс)
-	touch: true,    // Прокрутка  прикосновением
-	arrows: true,   // Прокрутка стрелками
-	dots: true      // Индикаторные точки
-};
-
-Ant.prototype.elemPrev = function(num) {
-	num = num || 1;
-
-	if(this.options.dots) this.dotOn(this.currentElement);
-	this.currentElement -= num;
-	if(this.currentElement < 0) this.currentElement = this.dotsVisible-1;
-	if(this.options.dots) this.dotOff(this.currentElement);
-
-	if(!this.options.loop) {  // сдвиг вправо без цикла
-		this.currentOffset += this.elemWidth*num;
-		this.crslList.style.marginLeft = this.currentOffset + 'px';
-		if(this.currentElement == 0) {
-			this.leftArrow.style.display = 'none'; this.touchPrev = false
-		}
-		this.rightArrow.style.display = 'block'; this.touchNext = true
-	}
-	else {                    // сдвиг вправо с циклом
-		let elm, buf, this$ = this;
-		for(let i=0; i<num; i++) {
-			elm = this.crslList.lastElementChild;
-			buf = elm.cloneNode(true);
-			this.crslList.insertBefore(buf, this.crslList.firstElementChild);
-			this.crslList.removeChild(elm)
-		};
-		this.crslList.style.marginLeft = '-' + this.elemWidth*num + 'px';
-		let compStyle = window.getComputedStyle(this.crslList).marginLeft;
-		this.crslList.style.cssText = 'transition:margin '+this.options.speed+'ms ease;';
-		this.crslList.style.marginLeft = '0px';
-		setTimeout(function() {
-			this$.crslList.style.cssText = 'transition:none;'
-		}, this.options.speed)
-	}
-};
-
-Ant.prototype.elemNext = function(num) {
-	num = num || 1;
-
-	if(this.options.dots) this.dotOn(this.currentElement);
-	this.currentElement += num;
-	if(this.currentElement >= this.dotsVisible) this.currentElement = 0;
-	if(this.options.dots) this.dotOff(this.currentElement);
-
-	if(!this.options.loop) {  // сдвиг влево без цикла
-		this.currentOffset -= this.elemWidth*num;
-		this.crslList.style.marginLeft = this.currentOffset + 'px';
-		if(this.currentElement == this.dotsVisible-1) {
-			this.rightArrow.style.display = 'none'; this.touchNext = false
-		}
-		this.leftArrow.style.display = 'block'; this.touchPrev = true
-	}
-	else {                    // сдвиг влево с циклом
-		let elm, buf, this$ = this;
-		this.crslList.style.cssText = 'transition:margin '+this.options.speed+'ms ease;';
-		this.crslList.style.marginLeft = '-' + this.elemWidth*num + 'px';
-		setTimeout(function() {
-			this$.crslList.style.cssText = 'transition:none;';
-			for(let i=0; i<num; i++) {
-				elm = this$.crslList.firstElementChild;
-				buf = elm.cloneNode(true); this$.crslList.appendChild(buf);
-				this$.crslList.removeChild(elm)
-			};
-			this$.crslList.style.marginLeft = '0px'
-		}, this.options.speed)
-	}
-};
-
-Ant.prototype.dotOn = function(num) {
-	this.indicatorDotsAll[num].style.cssText = 'background-color:#BBB; cursor:pointer;'
-};
-
-Ant.prototype.dotOff = function(num) {
-	this.indicatorDotsAll[num].style.cssText = 'background-color:#556; cursor:default;'
-};
-
-Ant.initialize = function(that) {
-
-	// Constants
-	that.elemCount = that.crslElements.length; // Количество элементов
-	that.dotsVisible = that.elemCount;         // Число видимых точек
-	let elemStyle = window.getComputedStyle(that.crslElemFirst);
-	that.elemWidth = that.crslElemFirst.offsetWidth +  // Ширина элемента (без margin)
-	  parseInt(elemStyle.marginLeft) + parseInt(elemStyle.marginRight);
-
-	// Variables
-	that.currentElement = 0; that.currentOffset = 0;
-	that.touchPrev = true; that.touchNext = true;
-	let xTouch, yTouch, xDiff, yDiff, stTime, mvTime;
-	let bgTime = getTime();
-
-	// Functions
-	function getTime() {
-		return new Date().getTime();
-	};
-	function setAutoScroll() {
-		that.autoScroll = setInterval(function() {
-			let fnTime = getTime();
-			if(fnTime - bgTime + 10 > that.options.interval) {
-				bgTime = fnTime; that.elemNext()
-			}
-		}, that.options.interval)
-	};
-
-	// Start initialization
-	if(that.elemCount <= that.options.elemVisible) {   // Отключить навигацию
-		that.options.auto = false; that.options.touch = false;
-		that.options.arrows = false; that.options.dots = false;
-		that.leftArrow.style.display = 'none'; that.rightArrow.style.display = 'none'
-	};
-
-	if(!that.options.loop) {       // если нет цикла - уточнить количество точек
-		that.dotsVisible = that.elemCount - that.options.elemVisible + 1;
-		that.leftArrow.style.display = 'none';  // отключить левую стрелку
-		that.touchPrev = false;    // отключить прокрутку прикосновением вправо
-		that.options.auto = false; // отключить автопркрутку
-	}
-	else if(that.options.auto) {   // инициализация автопрокруки
-		// setAutoScroll();
-		// Остановка прокрутки при наведении мыши на элемент
-		that.crslList.addEventListener('mouseenter', function() {
-    	clearInterval(that.autoScroll)
-    }, false);
-		that.crslList.addEventListener('mouseleave', setAutoScroll, false)
-	};
-
-	if(that.options.touch) {   // инициализация прокрутки прикосновением
-		that.crslList.addEventListener('touchstart', function(e) {
-			xTouch = parseInt(e.touches[0].clientX);
-			yTouch = parseInt(e.touches[0].clientY);
-			stTime = getTime()
-		}, false);
-		that.crslList.addEventListener('touchmove', function(e) {
-			if(!xTouch || !yTouch) return;
-			xDiff = xTouch - parseInt(e.touches[0].clientX);
-			yDiff = yTouch - parseInt(e.touches[0].clientY);
-			mvTime = getTime();
-			if(Math.abs(xDiff) > 15 && Math.abs(xDiff) > Math.abs(yDiff) && mvTime - stTime < 75) {
-				stTime = 0;
-				if(that.touchNext && xDiff > 0) {
-					bgTime = mvTime; that.elemNext()
-				}
-				else if(that.touchPrev && xDiff < 0) {
-					bgTime = mvTime; that.elemPrev()
-				}
-			}
-		}, false)
-	};
-
-	if(that.options.arrows) {  // инициализация стрелок
-		if(!that.options.loop) that.crslList.style.cssText =
-      'transition:margin '+that.options.speed+'ms ease;';
-		that.leftArrow.addEventListener('click', function() {
-			let fnTime = getTime();
-			if(fnTime - bgTime > that.options.speed) {
-				bgTime = fnTime; that.elemPrev()
-			}
-		}, false);
-		that.rightArrow.addEventListener('click', function() {
-			let fnTime = getTime();
-			if(fnTime - bgTime > that.options.speed) {
-				bgTime = fnTime; that.elemNext()
-			}
-		}, false)
-	}
-	else {
-		that.leftArrow.style.display = 'none';
-    that.rightArrow.style.display = 'none'
-	};
-
-	if(that.options.dots) {  // инициализация индикаторных точек
-		let sum = '', diffNum;
-		for(let i=0; i<that.dotsVisible; i++) {
-			sum += '<span class="ant-dot"></span>'
-		};
-		that.indicatorDots.innerHTML = sum;
-		that.indicatorDotsAll = that.crslRoot.querySelectorAll('span.ant-dot');
-		// Назначаем точкам обработчик события 'click'
-		for(let n=0; n<that.dotsVisible; n++) {
-			that.indicatorDotsAll[n].addEventListener('click', function() {
-				diffNum = Math.abs(n - that.currentElement);
-				if(n < that.currentElement) {
-					bgTime = getTime(); that.elemPrev(diffNum)
-				}
-				else if(n > that.currentElement) {
-					bgTime = getTime(); that.elemNext(diffNum)
-				}
-				// Если n == that.currentElement ничего не делаем
-			}, false)
-		};
-		that.dotOff(0);  // точка[0] выключена, остальные включены
-		for(let i=1; i<that.dotsVisible; i++) {
-			that.dotOn(i)
-		}
-	}
-};
-
-new Ant("second");
+// calendar settings
+let month = "August";
+let year = new Date().getFullYear();
+let dayOfWeek = new Date(month + "1," + year).getDay();
+let monthnew = new Date();
+let numberMonth;
+if (month === "January") {
+  numberMonth = 0;
+}
+if (month === "February") {
+  numberMonth = 1;
+}
+if (month === "March") {
+  numberMonth = 2;
+}
+if (month === "April") {
+  numberMonth = 3;
+}
+if (month === "May") {
+  numberMonth = 4;
+}
+if (month === "June") {
+  numberMonth = 5;
+}
+if (month === "July") {
+  numberMonth = 6;
+}
+if (month === "August") {
+  numberMonth = 7;
+}
+if (month === "September") {
+  numberMonth = 8;
+}
+if (month === "October") {
+  numberMonth = 9;
+}
+if (month === "November") {
+  numberMonth = 10;
+}
+if (month === "December") {
+  numberMonth = 11;
+}
+let fullLastDateArray = new Date(year, numberMonth + 1, 0).toString().split(" ");
+let arr = [];
+for (let i = 1; i <= fullLastDateArray[2]; i++) {
+  arr.push(i);
+}
+if (dayOfWeek === 2) {
+  arr.unshift(0);
+} else if ((dayOfWeek = 3)) {
+  arr.unshift(0, 0);
+} else if ((dayOfWeek = 4)) {
+  arr.unshift(0, 0, 0);
+} else if ((dayOfWeek = 5)) {
+  arr.unshift(0, 0, 0, 0);
+} else if ((dayOfWeek = 6)) {
+  arr.unshift(0, 0, 0, 0, 0);
+} else if ((dayOfWeek = 7)) {
+  arr.unshift(0, 0, 0, 0, 0, 0);
+}

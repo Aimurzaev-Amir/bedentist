@@ -12,10 +12,7 @@ html {
 nav {
   margin: 0 auto;
   max-width: 1100px;
-  width: 100%;
 }
-
-#checkbox-menu,
 .mobile-intro {
   display: none;
 }
@@ -23,7 +20,6 @@ header {
   background-image: url(img/Background.png);
   background-size: 100%;
   background-repeat: no-repeat;
-  /* height: 100vh; */
   height: calc(var(--vh, 1vh) * 100);
 }
 
@@ -33,6 +29,7 @@ header {
   align-items: center;
   list-style-type: none;
   font-weight: 400;
+  padding-top: 15px;
 }
 .menu li.logo {
   margin-right: 6%;
@@ -43,8 +40,7 @@ header {
   text-decoration: none;
   align-self: center;
   font-size: 18px;
-  margin-top: 35px;
-  margin-bottom: 35px;
+  padding: 35px 0;
 }
 .menu li a:hover {
   padding-bottom: 34px;
@@ -54,6 +50,7 @@ header {
   margin-right: 72px;
 }
 .menu li a.all {
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,7 +67,6 @@ header {
   padding-bottom: 0px;
   background-color: #fff;
 }
-
 .wrapper {
   margin: 0 auto;
   max-width: 1100px;
@@ -141,6 +137,7 @@ header {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #e8e2e2;
+  /* padding: 27px 0 13px 0; */
   padding-top: 27px;
   padding-bottom: 13px;
 }
@@ -162,8 +159,9 @@ header {
   border: 1px solid #2a93c9;
   border-radius: 8px;
   padding: 12px 30px;
+  cursor: pointer;
 }
-.card .timetable a {
+.card .timetable p {
   line-height: 16px;
   font-size: 14px;
   color: #2a93c9;
@@ -171,6 +169,7 @@ header {
   text-decoration: none;
   padding-left: 10px;
 }
+
 .number {
   white-space: nowrap;
 }
@@ -256,6 +255,9 @@ header {
   background: #2a93c9;
   border-radius: 4px;
   text-decoration: none;
+}
+.welcome-button {
+  cursor: pointer;
 }
 .service {
   background-color: #2a93c9;
@@ -443,19 +445,18 @@ header {
   color: #616262;
   border: 1px solid #616262;
 }
-.registration-form a {
-  display: flex;
-  justify-content: center;
+.registration-form button {
   color: #fff;
   font-weight: normal;
   background-color: #2a93c9;
   padding: 16px 30px;
+  max-width: 200px;
   border-radius: 4px;
   text-decoration: none;
   margin-top: 60px;
-  max-width: 119px;
   font-size: 14px;
   line-height: 16px;
+  cursor: pointer;
 }
 .news {
   margin-top: 80px;
@@ -663,6 +664,41 @@ hr {
   font-size: 14px;
   line-height: 16px;
 }
+.messageSend {
+  display: none;
+  position: fixed;
+  top: calc(var(--halfvh, 1vh) * 100);
+  left: calc(var(--halfvw, 1vh) * 100);
+}
+.messageWindow {
+  width: 600px;
+  height: 300px;
+  border-radius: 30px;
+  border: 3px solid #2a93c9;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.messageWindow h4 {
+  margin: 15px 0 15px 0;
+}
+.messageWindow p {
+  margin-bottom: 20px;
+}
+.img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+  height: 100px;
+}
+.doneImage {
+  display: none;
+  /* width: 100px;
+  height: 100px; */
+}
 
 @media screen and (min-width: 769px) and (max-width: 1099px) {
   header {
@@ -709,13 +745,14 @@ hr {
   header {
     background-size: cover;
     background-position-x: 80%;
-    padding-left: 20px;
-    padding-right: 20px;
   }
   .info {
     margin-top: 0;
   }
   .mobile-intro {
+    position: relative;
+    /* height: 100vh; */
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -728,26 +765,145 @@ hr {
   img.logo-mobile {
     width: 141px;
     height: 21px;
+    padding-left: 20px;
   }
-  img.toggle {
-    z-index: 19;
-    max-width: 30px;
-    max-height: 21px;
-    transition: all 0.1s linear;
-  }
-  #checkbox-menu:checked + label .touch li {
-    opacity: 1;
-    visibility: visible;
-    transition: all 0.7s linear;
-  }
-  #checkbox-menu:checked + label .touch {
-    z-index: 9;
-    background-color: rgba(0, 0, 0, 0.8);
+
+  /* Main menu positionning */
+  .bodyFixed {
     position: fixed;
-    right: 0;
+  }
+  .main-nav {
+    position: absolute;
     top: 0;
-    width: 100%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    background: #fff;
+    opacity: 0;
+    z-index: -1;
+    visibility: hidden;
+    transition: all 0.375s;
+  }
+  .main-nav.is-open {
+    height: 100vh;
+    opacity: 1;
+    z-index: 100;
+    visibility: visible;
+  }
+
+  /* Band effect */
+  .main-nav::before {
+    content: "";
+    position: absolute;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: -15px;
+    background: #56b0d2;
+    transform-origin: 0 0;
+    transform: skew(-14deg) translateX(-120%);
+    transition: all 0.275s 0.1s;
+  }
+
+  .main-nav.is-open::before {
+    transform: skew(-14deg) translateX(0);
+  }
+
+  /* Skewing effect on menu links */
+  .main-nav ul {
+    display: inline-flex;
+    flex-direction: column;
+    height: 93%; /* Should be 100%, but we have a notice message :D */
+    align-items: flex-end;
+    justify-content: center;
+    transform: translateX(-18%) skew(-16deg);
+  }
+
+  .main-nav li {
+    display: block;
+    margin: 0.5rem 0;
+    text-align: right;
+    transform: skew(16deg);
+  }
+
+  /* Apparition effect on links */
+  .main-nav a {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  .main-nav.is-open a {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .main-nav li:nth-child(1) a {
+    transition: all 275ms 175ms;
+  }
+  .main-nav li:nth-child(2) a {
+    transition: all 275ms 225ms;
+  }
+  .main-nav li:nth-child(3) a {
+    transition: all 275ms 275ms;
+  }
+  .main-nav li:nth-child(4) a {
+    transition: all 275ms 325ms;
+  }
+  .main-nav li:nth-child(5) a {
+    transition: all 275ms 375ms;
+  }
+
+  /* Decoration */
+  .main-nav ul,
+  .main-nav li {
+    list-style: none;
+    padding: 0;
+  }
+  .main-nav a {
+    display: block;
+    padding: 12px 0;
+    color: #fff;
+    font-size: 1.4em;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .open-main-nav {
+    padding: 10px 20px 0 0;
+    z-index: 1000;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .open-main-nav:focus {
+    outline: none;
+  }
+  .burger {
+    position: relative;
+    display: block;
+    width: 28px;
+    height: 4px;
+    margin: 0 auto;
+    background: #fff;
+    transform: skew(5deg);
+    transition: all 0.275s;
+  }
+
+  .burger:after,
+  .burger:before {
+    content: "";
+    display: block;
     height: 100%;
+    background: #fff;
+    transition: all 0.275s;
+  }
+
+  .burger:after {
+    transform: translateY(-12px) translateX(-2px) skew(-20deg);
+  }
+
+  .burger:before {
+    transform: translateY(-16px) skew(-10deg);
   }
   .menu {
     display: flex;
@@ -802,8 +958,7 @@ hr {
   }
   .intro {
     margin-top: 0px;
-    padding-left: 20px;
-    padding-right: 58px;
+    padding: 0 58px 0 20px;
   }
   .intro-text {
     padding-right: 58px;
@@ -853,18 +1008,14 @@ hr {
   }
   .welcome-text h3 {
     font-size: 28px;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding: 0 10%;
   }
   .welcome-text p {
     font-size: 16px;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding: 0 10%;
   }
   .welcome-container .welcome-info {
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-bottom: 30px;
+    margin: 0 5% 30px 5%;
     height: 400px;
   }
   .welcome-image {
@@ -878,18 +1029,14 @@ hr {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, 1fr);
-
-    margin-left: 39px;
-    margin-right: 50px;
+    margin: 0 50px 0 39px;
   }
   .serv-text h4 {
     max-width: 250px;
     font-size: 28px;
     line-height: 33px;
     padding-bottom: 5px;
-    margin-bottom: 39px;
-    margin-top: 30px;
-    margin-left: 50px;
+    margin: 30px 0 39px 50px;
   }
   .serv-card p {
     margin-bottom: 39px;
