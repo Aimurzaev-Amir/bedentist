@@ -699,6 +699,7 @@ hr {
 }
 
 .registrationCalendar {
+  display: none;
   position: fixed;
   width: 890px;
   height: 605px;
