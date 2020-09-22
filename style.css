@@ -696,8 +696,83 @@ hr {
 }
 .doneImage {
   display: none;
-  /* width: 100px;
-  height: 100px; */
+}
+
+.registrationCalendar {
+  position: fixed;
+  width: 890px;
+  height: 605px;
+  border-radius: 30px;
+  border: 3px solid #2a93c9;
+  background: #fff;
+  padding: 34px 53px;
+  top: calc(var(--halfCvh, 1vh) * 100);
+  left: calc(var(--halfCvw, 1vh) * 100);
+}
+.calendarOptios label {
+  margin-right: 12px;
+  font-size: 24px;
+  white-space: nowrap;
+}
+.calendarOptios select {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1.5px solid #2a93c9;
+  font-size: 18px;
+  outline: none;
+}
+.setDoctor {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.calendarMonth {
+  display: flex;
+  align-items: center;
+}
+.getCalendarDates {
+  margin-left: 50px;
+  background: #2a93c9;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 24px;
+  outline: none;
+  padding: 3px 53px;
+}
+.currentDate {
+  margin-top: 27px;
+  padding-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #2a93c9;
+}
+.currentYearMonth {
+  text-align: right;
+}
+.currentDate h2 {
+  font-size: 70px;
+}
+.currentDate p {
+  font-size: 28px;
+}
+.weekDays {
+  margin-top: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #2a93c9;
+  display: flex;
+  justify-content: space-around;
+}
+.weekDays p,
+.monthDays p {
+  font-size: 28px;
+}
+.monthDays {
+  margin-top: 13px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-row-gap: 20px;
+  justify-items: center;
 }
 
 @media screen and (min-width: 769px) and (max-width: 1099px) {

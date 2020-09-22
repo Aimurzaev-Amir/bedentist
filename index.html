@@ -105,6 +105,60 @@
           <div class="thi"></div>
         </div>
       </div>
+
+      <div class="registrationCalendar wrapper">
+        <div class="calendarOptios">
+          <div class="setDoctor">
+            <label for="docName">Выберите стамотолога:</label>
+            <select name="docName">
+              <option selected value disabled>Выберите стамотолога</option>
+              <option value="Denis Viktorovich">Денис Викторович</option>
+              <option value="Natalia Sergeevna">Наталья Сергеевна</option>
+              <option value="Anna Skhopyak">Анна Шкопяк</option>
+              <option value="Larisa Fedoseeva">Лариса Федосеева</option>
+            </select>
+          </div>
+          <div class="calendarMonth">
+            <label for="monthName">Выберите месяц:</label>
+            <select name="monthName" id="monthName">
+              <option>Выберите месяц</option>
+              <option value="January">Январь</option>
+              <option value="February">Февраль</option>
+              <option value="March">Март</option>
+              <option value="April">Апрель</option>
+              <option value="May">Май</option>
+              <option value="June">Июнь</option>
+              <option value="July">Июль</option>
+              <option value="August">Август</option>
+              <option value="September">Сентябрь</option>
+              <option value="October">Октябрь</option>
+              <option value="November">Ноябрь</option>
+              <option value="December">Декабрь</option>
+            </select>
+            <button class="getCalendarDates">Узнать</button>
+          </div>
+        </div>
+        <div class="calendar">
+          <div class="currentDate">
+            <h2 id="currentDate"></h2>
+            <div class="currentYearMonth">
+              <p id="currentYear"></p>
+              <p id="currentMonth"></p>
+            </div>
+          </div>
+          <div class="weekDays">
+            <p>Пн</p>
+            <p>Вт</p>
+            <p>Ср</p>
+            <p>Чт</p>
+            <p>Пт</p>
+            <p>Сб</p>
+            <p>Вс</p>
+          </div>
+          <div class="monthDays" id="monthDays"></div>
+        </div>
+      </div>
+
       <div class="welcome">
         <div class="welcome-text wrapper">
           <h3>Добро пожаловать в BeDentist!</h3>
@@ -124,21 +178,6 @@
               <button class="welcome-button">Зарегистрироваться</button>
             </a>
           </div>
-        </div>
-      </div>
-      <div class="registrationCalendar">
-        <div class="calendarOptios">
-          <div class="setDoctor">
-            <label for="docName">Выберите стамотолога:</label>
-            <input type="text" name="docName" />
-          </div>
-          <div class="calendarMonth">
-            <label for="docName">Выберите стамотолога:</label>
-            <input type="text" name="docName" />
-          </div>
-        </div>
-        <div class="calendar">
-          
         </div>
       </div>
       <div class="service">
