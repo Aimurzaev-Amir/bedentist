@@ -107,55 +107,124 @@
       </div>
 
       <div class="registrationCalendar wrapper">
-        <div class="calendarOptios">
-          <div class="setDoctor">
-            <label for="docName">Выберите стамотолога:</label>
-            <select name="docName">
-              <option selected value disabled>Выберите стамотолога</option>
-              <option value="Denis Viktorovich">Денис Викторович</option>
-              <option value="Natalia Sergeevna">Наталья Сергеевна</option>
-              <option value="Anna Skhopyak">Анна Шкопяк</option>
-              <option value="Larisa Fedoseeva">Лариса Федосеева</option>
-            </select>
-          </div>
-          <div class="calendarMonth">
-            <label for="monthName">Выберите месяц:</label>
-            <select name="monthName" id="monthName">
-              <option>Выберите месяц</option>
-              <option value="January">Январь</option>
-              <option value="February">Февраль</option>
-              <option value="March">Март</option>
-              <option value="April">Апрель</option>
-              <option value="May">Май</option>
-              <option value="June">Июнь</option>
-              <option value="July">Июль</option>
-              <option value="August">Август</option>
-              <option value="September">Сентябрь</option>
-              <option value="October">Октябрь</option>
-              <option value="November">Ноябрь</option>
-              <option value="December">Декабрь</option>
-            </select>
-            <button class="getCalendarDates">Узнать</button>
-          </div>
-        </div>
-        <div class="calendar">
-          <div class="currentDate">
-            <h2 id="currentDate"></h2>
-            <div class="currentYearMonth">
-              <p id="currentYear"></p>
-              <p id="currentMonth"></p>
+        <div class="flexDisplays">
+          <div class="calendarDates">
+            <div class="calendarOptios">
+              <div class="setDoctor">
+                <label for="docName">Выберите стамотолога:</label>
+                <select name="docName">
+                  <option selected value disabled>Выберите стамотолога</option>
+                  <option value="Denis Viktorovich">Денис Викторович</option>
+                  <option value="Natalia Sergeevna">Наталья Сергеевна</option>
+                  <option value="Anna Skhopyak">Анна Шкопяк</option>
+                  <option value="Larisa Fedoseeva">Лариса Федосеева</option>
+                </select>
+              </div>
+              <div class="calendarMonth">
+                <label for="monthName">Выберите месяц:</label>
+                <select name="monthName" id="monthName">
+                  <option>Выберите месяц</option>
+                  <option value="January">Январь</option>
+                  <option value="February">Февраль</option>
+                  <option value="March">Март</option>
+                  <option value="April">Апрель</option>
+                  <option value="May">Май</option>
+                  <option value="June">Июнь</option>
+                  <option value="July">Июль</option>
+                  <option value="August">Август</option>
+                  <option value="September">Сентябрь</option>
+                  <option value="October">Октябрь</option>
+                  <option value="November">Ноябрь</option>
+                  <option value="December">Декабрь</option>
+                </select>
+                <button class="getCalendarDates">Узнать</button>
+              </div>
+            </div>
+            <div class="calendar">
+              <div class="currentDate">
+                <h2 id="currentDate"></h2>
+                <div class="currentYearMonth">
+                  <p id="currentYear"></p>
+                  <p id="currentMonth"></p>
+                </div>
+              </div>
+              <div class="weekDays">
+                <p>Пн</p>
+                <p>Вт</p>
+                <p>Ср</p>
+                <p>Чт</p>
+                <p>Пт</p>
+                <p>Сб</p>
+                <p>Вс</p>
+              </div>
+              <div class="monthDays" id="monthDays"></div>
             </div>
           </div>
-          <div class="weekDays">
-            <p>Пн</p>
-            <p>Вт</p>
-            <p>Ср</p>
-            <p>Чт</p>
-            <p>Пт</p>
-            <p>Сб</p>
-            <p>Вс</p>
+          <div class="meetingTimeTable">
+            <button class="getCalendarDates getBack">Календарь</button>
+            <div class="chosenDateBlock">
+              <h2 class="chosenDate"></h2>
+            </div>
+            <div class="meetingsTimeGraph">
+              <table class="usersTimetable">
+                <!-- <tr>
+                  <th>Время</th>
+                  <th>Клиент</th>
+                  <th>Задача</th>
+                </tr>
+                <tr>
+                  <td>9:00</td>
+                  <td>Амир</td>
+                  <td>Чистка зубов</td>
+                </tr>
+                <tr>
+                  <td>9:00</td>
+                  <td>Амир</td>
+                  <td>Чистка зубов</td>
+                </tr>
+                <tr>
+                  <td>10:00</td>
+                  <td>Амир</td>
+                  <td>Чистка зубов</td>
+                </tr>
+                <tr>
+                  <td>11:00</td>
+                  <td>Амир</td>
+                  <td>Чистка зубов</td>
+                </tr>
+                <tr>
+                  <td>12:00</td>
+                  <td>Амир</td>
+                  <td>Чистка зубов</td>
+                </tr>
+                <tr>
+                  <td>13:00</td>
+                  <td>Амир</td>
+                  <td>Чистка зубов</td>
+                </tr>
+                <tr>
+                  <td>14:00</td>
+                  <td>Амир</td>
+                  <td>Чистка зубов</td>
+                </tr>
+                <tr>
+                  <td>15:00</td>
+                  <td>Амир</td>
+                  <td>Чистка зубов</td>
+                </tr>
+                <tr>
+                  <td>16:00</td>
+                  <td>Амир</td>
+                  <td>Чистка зубов</td>
+                </tr>
+                <tr>
+                  <td>17:00</td>
+                  <td>Амир</td>
+                  <td>Чистка зубов</td>
+                </tr> -->
+              </table>
+            </div>
           </div>
-          <div class="monthDays" id="monthDays"></div>
         </div>
       </div>
 

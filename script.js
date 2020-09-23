@@ -82,6 +82,7 @@ window.addEventListener("resize", () => {
 
 // calendar settings
 //set current date month year
+let getCalendarDates = document.querySelector(".getCalendarDates");
 let currentDate = document.getElementById("currentDate");
 let currentMonthDay = new Date().getDate();
 currentDate.innerHTML = currentMonthDay;
@@ -94,29 +95,29 @@ let currentMonth = document.getElementById("currentMonth");
 let currentMonthNumberDate = new Date().getMonth() + 1;
 let currentMonthDate;
 if (currentMonthNumberDate === 1) {
-  currentMonthDate = "January";
+  currentMonthDate = "Январь";
 } else if (currentMonthNumberDate === 2) {
-  currentMonthDate = "February";
+  currentMonthDate = "Февраль";
 } else if (currentMonthNumberDate === 3) {
-  currentMonthDate = "March";
+  currentMonthDate = "Март";
 } else if (currentMonthNumberDate === 4) {
-  currentMonthDate = "April";
+  currentMonthDate = "Апрель";
 } else if (currentMonthNumberDate === 5) {
-  currentMonthDate = "May";
+  currentMonthDate = "Май";
 } else if (currentMonthNumberDate === 6) {
-  currentMonthDate = "June";
+  currentMonthDate = "Июнь";
 } else if (currentMonthNumberDate === 7) {
-  currentMonthDate = "July";
+  currentMonthDate = "Июль";
 } else if (currentMonthNumberDate === 8) {
-  currentMonthDate = "August";
+  currentMonthDate = "Август";
 } else if (currentMonthNumberDate === 9) {
-  currentMonthDate = "September";
+  currentMonthDate = "Сентябрь";
 } else if (currentMonthNumberDate === 10) {
-  currentMonthDate = "October";
+  currentMonthDate = "Октябрь";
 } else if (currentMonthNumberDate === 11) {
-  currentMonthDate = "November";
+  currentMonthDate = "Ноябрь";
 } else if (currentMonthNumberDate === 12) {
-  currentMonthDate = "December";
+  currentMonthDate = "Декабрь";
 }
 currentMonth.innerHTML = currentMonthDate;
 
@@ -166,6 +167,7 @@ monthName.addEventListener("change", function () {
   if (month === "December") {
     numberMonth = 11;
   }
+  currentMonth.innerHTML = monthName.options[monthName.selectedIndex].text;
   let fullLastDateArray = new Date(year, numberMonth + 1, 0).toString().split(" ");
   for (let i = 1; i <= fullLastDateArray[2]; i++) {
     arr.push(i);
@@ -173,7 +175,6 @@ monthName.addEventListener("change", function () {
   if (dayOfWeek === 2) {
     arr.unshift(0);
   } else if (dayOfWeek === 3) {
-    console.log("3");
     arr.unshift(0, 0);
   } else if (dayOfWeek === 4) {
     arr.unshift(0, 0, 0);
@@ -186,12 +187,120 @@ monthName.addEventListener("change", function () {
   }
   monthDays.innerHTML = "";
   arr.forEach((day) => {
-    let newP = document.createElement("p");
+    let newP = document.createElement("div");
+    newP.classList.add("monthDayBlock");
+    let dayNum = document.createAttribute("dayNum");
+    dayNum.value = day;
+    newP.setAttributeNode(dayNum);
     if (day === 0) {
       newP.innerHTML = "";
     } else {
-      newP.innerHTML = day;
+      newP.innerHTML = `<p class="day">${day}</p>`;
     }
     monthDays.appendChild(newP);
+    newP.addEventListener("click", function (e) {
+      if (e.currentTarget.innerText !== "") {
+        currentDate.innerHTML = e.currentTarget.innerText;
+        let selectedDay = document.getElementsByClassName("selectedDay");
+        for (let i = 0; i < selectedDay.length; i++) {
+          selectedDay[i].classList.remove("selectedDay");
+        }
+        newP.classList.add("selectedDay");
+        getCalendarDates.style.display = "block";
+        let chosenDate = document.querySelector(".chosenDate");
+        chosenDate.innerHTML =
+          e.currentTarget.innerText + " " + monthName.options[monthName.selectedIndex].text;
+      }
+    });
   });
 });
+
+let calendarDates = document.querySelector(".calendarDates");
+let meetingTimeTable = document.querySelector(".meetingTimeTable");
+let getBack = document.querySelector(".getBack");
+getCalendarDates.addEventListener("click", function () {
+  calendarDates.style.display = "none";
+  meetingTimeTable.style.display = "block";
+});
+
+getBack.addEventListener("click", function () {
+  calendarDates.style.display = "block";
+  meetingTimeTable.style.display = "none";
+});
+
+const timeArr = [
+  {
+    hour: "9:00",
+  },
+  {
+    hour: "10:00",
+  },
+  {
+    hour: "11:00",
+  },
+  {
+    hour: "12:00",
+  },
+  {
+    hour: "13:00",
+  },
+  {
+    hour: "14:00",
+  },
+  {
+    hour: "15:00",
+  },
+  {
+    hour: "16:00",
+  },
+  {
+    hour: "17:00",
+  },
+];
+
+
+const usersArr = [
+  {
+    time: "12:00",
+    name: "Амир",
+    goal: "Чистка зубов",
+  },
+  {
+    time: "15:00",
+    name: "Амир",
+    goal: "Чистка зубов",
+  },
+  {
+    time: "9:00",
+    name: "Амир",
+    goal: "Чистка зубов",
+  },
+  {
+    time: "17:00",
+    name: "Амир",
+    goal: "Чистка зубов",
+  },
+];
+
+let usersTimetable = document.querySelector(".usersTimetable");
+
+let timetable = () => {
+  timeArr.map((time) => {
+    usersArr
+      .filter((user) => time.hour === user.time)
+      .map((user) => {
+        let userTimeBlock = document.createElement("tr");
+        let userTime = document.createElement("td");
+        let userName = document.createElement("td");
+        let userGoal = document.createElement("td");
+        userTime.innerHTML = time.hour;
+        userName.innerHTML = user.name;
+        userGoal.innerHTML = user.goal;
+        usersTimetable.appendChild(userTimeBlock);
+        userTimeBlock.appendChild(userTime);
+        userTimeBlock.appendChild(userName);
+        userTimeBlock.appendChild(userGoal);
+      });
+  });
+};
+timetable();
