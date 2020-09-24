@@ -733,7 +733,7 @@ hr {
   align-items: center;
 }
 .getCalendarDates {
-  display: none;
+  /* display: none; */
   margin-left: 50px;
   background: #2a93c9;
   border-radius: 10px;
@@ -812,10 +812,16 @@ hr {
 }
 .getBack {
   display: block;
-  margin-left: unset;
   position: absolute;
   top: 0;
   left: 0;
+  background: #2a93c9;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 24px;
+  outline: none;
+  padding: 3px 53px;
+  cursor: pointer;
 }
 .chosenDateBlock {
   text-align: center;
@@ -823,19 +829,61 @@ hr {
 }
 .meetingsTimeGraph {
   height: 85%;
-  margin-top: 30px;
+  margin-top: 10px;
+  text-align: center;
 }
 .usersTime {
   display: flex;
   width: 200px;
 }
 .usersTimetable {
-  width: 100%;
-  height: 100%;
-  border-collapse: collapse;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 10px;
+  justify-items: center;
+  margin: 20px 0 50px 0;
 }
-.usersTimetable td {
-  border: 2px solid #2a93c9;
+.usersTimetableBlock {
+  width: 150px;
+  font-size: 20px;
+  border-radius: 15px;
+  padding: 5px 0 5px 0;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #2a93c9;
+}
+.userClosedTime {
+  background-color: #939393;
+}
+.usersDataForm {
+  display: flex;
+  flex-direction: column;
+}
+.usersDataForm input,
+.usersDataForm button {
+  font-size: 18px;
+}
+.usersDataForm h2 {
+  margin-bottom: 10px;
+}
+.calendarDates {
+  position: relative;
+}
+.popup {
+  display: none;
+  position: absolute;
+  top: 300px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 30px;
+  border: 1px solid #2a93c9;
+}
+.popup p {
+  padding: 30px 0 30px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 @media screen and (min-width: 769px) and (max-width: 1099px) {

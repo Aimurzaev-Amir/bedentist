@@ -19,7 +19,7 @@ burger.addEventListener("click", function (e) {
   body.classList.toggle("bodyFixed");
 });
 
-for (var i = 0; i < navLink.length; i++) {
+for (let i = 0; i < navLink.length; i++) {
   navLink[i].addEventListener("click", function (e) {
     body.classList.remove("bodyFixed");
     burger.classList.remove("is-open");
@@ -37,9 +37,9 @@ send.addEventListener("click", function (e) {
   messageSend.style.display = "block";
   centerPosition(".messageWindow");
   let messageWindow = document.querySelector(".messageWindow");
-  var positionInfo = messageWindow.getBoundingClientRect();
-  var height = positionInfo.height;
-  var width = positionInfo.width;
+  let positionInfo = messageWindow.getBoundingClientRect();
+  let height = positionInfo.height;
+  let width = positionInfo.width;
   // Setting the viewport height
   let halfvh = (window.innerHeight / 2 - height / 2) * 0.01;
   let halfvw = (window.innerWidth / 2 - width / 2) * 0.01;
@@ -62,11 +62,14 @@ send.addEventListener("click", function (e) {
   }, 2000);
 });
 
+// CALENDAR MEETING SETTINGS
+
+// calendar window positioning
 let registrationCalendar = document.querySelector(".registrationCalendar");
 // registrationCalendar.style.display = "block";
-var positionInfo = registrationCalendar.getBoundingClientRect();
-var height = positionInfo.height;
-var width = positionInfo.width;
+let positionInfo = registrationCalendar.getBoundingClientRect();
+let height = positionInfo.height;
+let width = positionInfo.width;
 // Setting the viewport height
 let halfCvh = (window.innerHeight / 2 - height / 2) * 0.01;
 let halfCvw = (window.innerWidth / 2 - width / 2) * 0.01;
@@ -80,20 +83,21 @@ window.addEventListener("resize", () => {
   document.documentElement.style.setProperty("--halfCvh", `${halfCvh}px`);
 });
 
-// calendar settings
-//set current date month year
+//get current date and set
 let getCalendarDates = document.querySelector(".getCalendarDates");
 let currentDate = document.getElementById("currentDate");
 let currentMonthDay = new Date().getDate();
 currentDate.innerHTML = currentMonthDay;
-
+// get current year and set
 let currentYear = document.getElementById("currentYear");
 let currentYearDate = new Date().getFullYear();
 currentYear.innerHTML = currentYearDate;
-
+// get current month
 let currentMonth = document.getElementById("currentMonth");
 let currentMonthNumberDate = new Date().getMonth() + 1;
 let currentMonthDate;
+
+// converting month numver to month name
 if (currentMonthNumberDate === 1) {
   currentMonthDate = "Январь";
 } else if (currentMonthNumberDate === 2) {
@@ -119,17 +123,22 @@ if (currentMonthNumberDate === 1) {
 } else if (currentMonthNumberDate === 12) {
   currentMonthDate = "Декабрь";
 }
+// set month name
 currentMonth.innerHTML = currentMonthDate;
 
 // set current month days by weeks
 let monthDays = document.getElementById("monthDays");
 let monthName = document.getElementById("monthName");
 let arr = [];
+
+// on change month select element
 monthName.addEventListener("change", function () {
   arr = [];
   let month = monthName.value;
   let year = new Date().getFullYear();
   let dayOfWeek = new Date(month + "1," + year).getDay();
+
+  // convert moth name to number
   let numberMonth;
   if (month === "January") {
     numberMonth = 0;
@@ -167,11 +176,17 @@ monthName.addEventListener("change", function () {
   if (month === "December") {
     numberMonth = 11;
   }
+
+  // change month on select changing
   currentMonth.innerHTML = monthName.options[monthName.selectedIndex].text;
+
+  // get last day of month
   let fullLastDateArray = new Date(year, numberMonth + 1, 0).toString().split(" ");
   for (let i = 1; i <= fullLastDateArray[2]; i++) {
     arr.push(i);
   }
+
+  // set beginning of the week from correct week day
   if (dayOfWeek === 2) {
     arr.unshift(0);
   } else if (dayOfWeek === 3) {
@@ -185,7 +200,11 @@ monthName.addEventListener("change", function () {
   } else if (dayOfWeek === 0) {
     arr.unshift(0, 0, 0, 0, 0, 0);
   }
+
+  // clear month days before set new month days
   monthDays.innerHTML = "";
+
+  //create for each day block and paragraph
   arr.forEach((day) => {
     let newP = document.createElement("div");
     newP.classList.add("monthDayBlock");
@@ -198,18 +217,34 @@ monthName.addEventListener("change", function () {
       newP.innerHTML = `<p class="day">${day}</p>`;
     }
     monthDays.appendChild(newP);
+    let clickedDay;
+    let chosenDate = document.querySelector(".chosenDate");
+    let chosenDoc = document.querySelector(".chosenDoc");
+    let docName = document.getElementById("docName");
+
+    // on day number click action
     newP.addEventListener("click", function (e) {
-      if (e.currentTarget.innerText !== "") {
+      if (
+        e.currentTarget.innerText !== "" &&
+        docName.options[docName.selectedIndex].text !== "Выберите стоматолога"
+      ) {
+        clickedDay = e.currentTarget.innerText;
         currentDate.innerHTML = e.currentTarget.innerText;
         let selectedDay = document.getElementsByClassName("selectedDay");
         for (let i = 0; i < selectedDay.length; i++) {
           selectedDay[i].classList.remove("selectedDay");
         }
         newP.classList.add("selectedDay");
-        getCalendarDates.style.display = "block";
-        let chosenDate = document.querySelector(".chosenDate");
+        getCalendarDates.removeAttribute("disabled");
         chosenDate.innerHTML =
           e.currentTarget.innerText + " " + monthName.options[monthName.selectedIndex].text;
+        chosenDoc.innerHTML = docName.options[docName.selectedIndex].text;
+      } else {
+        let popup = document.querySelector(".popup");
+        popup.style.display = "block";
+        setTimeout(function () {
+          popup.style.display = "none";
+        }, 1000);
       }
     });
   });
@@ -218,11 +253,13 @@ monthName.addEventListener("change", function () {
 let calendarDates = document.querySelector(".calendarDates");
 let meetingTimeTable = document.querySelector(".meetingTimeTable");
 let getBack = document.querySelector(".getBack");
+// go button to the next page (day timetable)
 getCalendarDates.addEventListener("click", function () {
   calendarDates.style.display = "none";
   meetingTimeTable.style.display = "block";
 });
 
+// second page (day timetable) get back button
 getBack.addEventListener("click", function () {
   calendarDates.style.display = "block";
   meetingTimeTable.style.display = "none";
@@ -258,7 +295,6 @@ const timeArr = [
   },
 ];
 
-
 const usersArr = [
   {
     time: "12:00",
@@ -283,24 +319,34 @@ const usersArr = [
 ];
 
 let usersTimetable = document.querySelector(".usersTimetable");
-
 let timetable = () => {
   timeArr.map((time) => {
-    usersArr
-      .filter((user) => time.hour === user.time)
-      .map((user) => {
-        let userTimeBlock = document.createElement("tr");
-        let userTime = document.createElement("td");
-        let userName = document.createElement("td");
-        let userGoal = document.createElement("td");
-        userTime.innerHTML = time.hour;
-        userName.innerHTML = user.name;
-        userGoal.innerHTML = user.goal;
-        usersTimetable.appendChild(userTimeBlock);
-        userTimeBlock.appendChild(userTime);
-        userTimeBlock.appendChild(userName);
-        userTimeBlock.appendChild(userGoal);
-      });
+    let userTimeBlock = document.createElement("div");
+    let userTimeButton = document.createElement("button");
+    userTimeButton.innerHTML = time.hour;
+    userTimeButton.classList.add("usersTimetableBlock");
+    usersTimetable.appendChild(userTimeBlock);
+    userTimeBlock.appendChild(userTimeButton);
+  });
+  usersArr.map((user) => {
+    let usersTimetableBlocks = document.querySelectorAll(".usersTimetableBlock");
+    for (let i = 0; i < usersTimetableBlocks.length; i++) {
+      if (usersTimetableBlocks[i].innerText === user.time) {
+        usersTimetableBlocks[i].classList.add("userClosedTime");
+        usersTimetableBlocks[i].setAttribute("disabled", "disabled");
+        // usersTimetableBlocks[i].style.cursor =
+      }
+    }
   });
 };
+
 timetable();
+
+let clickedTime;
+let usersTimetableBlocks = document.querySelectorAll(".usersTimetableBlock");
+
+for (let i = 0; i < usersTimetableBlocks.length; i++) {
+  usersTimetableBlocks[i].addEventListener("click", function (e) {
+    clickedTime = e.currentTarget.innerHTML;
+  });
+}

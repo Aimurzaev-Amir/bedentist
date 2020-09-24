@@ -111,9 +111,9 @@
           <div class="calendarDates">
             <div class="calendarOptios">
               <div class="setDoctor">
-                <label for="docName">Выберите стамотолога:</label>
-                <select name="docName">
-                  <option selected value disabled>Выберите стамотолога</option>
+                <label for="docName">Выберите стоматолога:</label>
+                <select name="docName" id="docName">
+                  <option selected value disabled>Выберите стоматолога</option>
                   <option value="Denis Viktorovich">Денис Викторович</option>
                   <option value="Natalia Sergeevna">Наталья Сергеевна</option>
                   <option value="Anna Skhopyak">Анна Шкопяк</option>
@@ -137,7 +137,7 @@
                   <option value="November">Ноябрь</option>
                   <option value="December">Декабрь</option>
                 </select>
-                <button class="getCalendarDates">Узнать</button>
+                <button class="getCalendarDates" disabled="true">Узнать</button>
               </div>
             </div>
             <div class="calendar">
@@ -159,70 +159,25 @@
               </div>
               <div class="monthDays" id="monthDays"></div>
             </div>
+            <div class="popup">
+              <p>Пожалуйста, выберите нужного стоматолога из списка!</p>
+            </div>
           </div>
           <div class="meetingTimeTable">
-            <button class="getCalendarDates getBack">Календарь</button>
+            <button class="getBack">Календарь</button>
             <div class="chosenDateBlock">
               <h2 class="chosenDate"></h2>
+              <h3 class="chosenDoc"></h3>
             </div>
             <div class="meetingsTimeGraph">
-              <table class="usersTimetable">
-                <!-- <tr>
-                  <th>Время</th>
-                  <th>Клиент</th>
-                  <th>Задача</th>
-                </tr>
-                <tr>
-                  <td>9:00</td>
-                  <td>Амир</td>
-                  <td>Чистка зубов</td>
-                </tr>
-                <tr>
-                  <td>9:00</td>
-                  <td>Амир</td>
-                  <td>Чистка зубов</td>
-                </tr>
-                <tr>
-                  <td>10:00</td>
-                  <td>Амир</td>
-                  <td>Чистка зубов</td>
-                </tr>
-                <tr>
-                  <td>11:00</td>
-                  <td>Амир</td>
-                  <td>Чистка зубов</td>
-                </tr>
-                <tr>
-                  <td>12:00</td>
-                  <td>Амир</td>
-                  <td>Чистка зубов</td>
-                </tr>
-                <tr>
-                  <td>13:00</td>
-                  <td>Амир</td>
-                  <td>Чистка зубов</td>
-                </tr>
-                <tr>
-                  <td>14:00</td>
-                  <td>Амир</td>
-                  <td>Чистка зубов</td>
-                </tr>
-                <tr>
-                  <td>15:00</td>
-                  <td>Амир</td>
-                  <td>Чистка зубов</td>
-                </tr>
-                <tr>
-                  <td>16:00</td>
-                  <td>Амир</td>
-                  <td>Чистка зубов</td>
-                </tr>
-                <tr>
-                  <td>17:00</td>
-                  <td>Амир</td>
-                  <td>Чистка зубов</td>
-                </tr> -->
-              </table>
+              <h2>Выберите свободное время</h2>
+              <div class="usersTimetable"></div>
+              <form action="" class="usersDataForm">
+                <h2>Введите контактную информацию</h2>
+                <input type="text" placeholder="Введите ваше имя" />
+                <input type="number" placeholder="Введите ваш номер телефона" />
+                <button class="saveUsersTime">Записаться</button>
+              </form>
             </div>
           </div>
         </div>
