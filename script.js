@@ -63,6 +63,37 @@ send.addEventListener("click", function (e) {
 });
 
 // CALENDAR MEETING SETTINGS
+const timeArr = [
+  {
+    hour: "9:00",
+  },
+  {
+    hour: "10:00",
+  },
+  {
+    hour: "11:00",
+  },
+  {
+    hour: "12:00",
+  },
+  {
+    hour: "13:00",
+  },
+  {
+    hour: "14:00",
+  },
+  {
+    hour: "15:00",
+  },
+  {
+    hour: "16:00",
+  },
+  {
+    hour: "17:00",
+  },
+];
+
+let usersArr = [];
 
 // calendar window positioning
 let registrationCalendar = document.querySelector(".registrationCalendar");
@@ -256,7 +287,7 @@ let calendarDates = document.querySelector(".calendarDates");
 let meetingTimeTable = document.querySelector(".meetingTimeTable");
 let getBack = document.querySelector(".getBack");
 // go button to the next page (day timetable)
-getCalendarDates.addEventListener("click", function () {
+getCalendarDates.addEventListener("click", async function () {
   if (
     docName.options[docName.selectedIndex].text === "Выберите стоматолога" ||
     monthName.options[monthName.selectedIndex].text === "Выберите месяц" ||
@@ -270,6 +301,8 @@ getCalendarDates.addEventListener("click", function () {
   } else {
     calendarDates.style.display = "none";
     meetingTimeTable.style.display = "block";
+    let data = await MeetingsAPI.getAllMeetings();
+    // data = usersArr;
   }
 });
 
@@ -278,59 +311,6 @@ getBack.addEventListener("click", function () {
   calendarDates.style.display = "block";
   meetingTimeTable.style.display = "none";
 });
-
-const timeArr = [
-  {
-    hour: "9:00",
-  },
-  {
-    hour: "10:00",
-  },
-  {
-    hour: "11:00",
-  },
-  {
-    hour: "12:00",
-  },
-  {
-    hour: "13:00",
-  },
-  {
-    hour: "14:00",
-  },
-  {
-    hour: "15:00",
-  },
-  {
-    hour: "16:00",
-  },
-  {
-    hour: "17:00",
-  },
-];
-
-const usersArr = [
-  {
-    time: "12:00",
-    name: "Амир",
-    goal: "Чистка зубов",
-  },
-  {
-    time: "15:00",
-    name: "Амир",
-    goal: "Чистка зубов",
-  },
-  {
-    time: "9:00",
-    name: "Амир",
-    goal: "Чистка зубов",
-  },
-  {
-    time: "17:00",
-    name: "Амир",
-    goal: "Чистка зубов",
-  },
-];
 
 let usersTimetable = document.querySelector(".usersTimetable");
 let timetable = () => {
@@ -341,7 +321,7 @@ let timetable = () => {
     userTimeButton.classList.add("usersTimetableBlock");
     usersTimetable.appendChild(userTimeBlock);
     userTimeBlock.appendChild(userTimeButton);
-  });  
+  });
   usersArr.map((user) => {
     let usersTimetableBlocks = document.querySelectorAll(".usersTimetableBlock");
     for (let i = 0; i < usersTimetableBlocks.length; i++) {
@@ -354,7 +334,7 @@ let timetable = () => {
   });
 };
 
-timetable();     
+timetable();
 
 let clickedTime;
 let usersTimetableBlocks = document.querySelectorAll(".usersTimetableBlock");
@@ -366,11 +346,19 @@ for (let i = 0; i < usersTimetableBlocks.length; i++) {
 }
 
 let usersDataForm = document.querySelector(".usersDataForm");
-function handleForm(e) {
+async function handleForm(e) {
   e.preventDefault();
   let formData = new FormData(usersDataForm);
   console.log(formData.get("name"));
   console.log(formData.get("number"));
   console.log(formData.get("info"));
+  await MeetingsAPI.createMeeting(
+    formData.get("name"),
+    clickedDay,
+    "September",
+    clickedTime,
+    formData.get("number"),
+    formData.get("info")
+  );
 }
 usersDataForm.addEventListener("submit", handleForm);
