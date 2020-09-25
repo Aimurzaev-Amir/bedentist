@@ -302,7 +302,10 @@ getCalendarDates.addEventListener("click", async function () {
     calendarDates.style.display = "none";
     meetingTimeTable.style.display = "block";
     let data = await MeetingsAPI.getAllMeetings();
-    // data = usersArr;
+    usersArr = data;
+    if (usersArr.length !== 0) {
+      timetable();
+    }
   }
 });
 
@@ -334,14 +337,17 @@ let timetable = () => {
   });
 };
 
-timetable();
-
 let clickedTime;
 let usersTimetableBlocks = document.querySelectorAll(".usersTimetableBlock");
 
 for (let i = 0; i < usersTimetableBlocks.length; i++) {
   usersTimetableBlocks[i].addEventListener("click", function (e) {
     clickedTime = e.currentTarget.innerHTML;
+    let choosedTime = document.getElementsByClassName("choosedTime");
+    for (let i = 0; i < choosedTime.length; i++) {
+      choosedTime[i].classList.remove("choosedTime");
+    }
+    usersTimetableBlocks[i].classList.add("choosedTime");
   });
 }
 
