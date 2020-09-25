@@ -699,7 +699,7 @@ hr {
 }
 
 .registrationCalendar {
-  display: none;
+  /* display: none; */
   overflow: hidden;
   position: fixed;
   width: 890px;
@@ -863,6 +863,7 @@ hr {
 .usersDataForm input,
 .usersDataForm button {
   font-size: 18px;
+  padding: 5px 15px;
 }
 .usersDataForm h2 {
   margin-bottom: 10px;
@@ -886,6 +887,12 @@ hr {
   justify-content: center;
   text-align: center;
 }
+.saveUsersTime {
+  background-color: #2a93c9;
+  color: #fff;
+}
+
+
 @media screen and (min-width: 769px) and (max-width: 1099px) {
   header {
     height: unset;

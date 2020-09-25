@@ -137,7 +137,7 @@
                   <option value="November">Ноябрь</option>
                   <option value="December">Декабрь</option>
                 </select>
-                <button class="getCalendarDates" disabled="true">Узнать</button>
+                <button class="getCalendarDates" >Узнать</button>
               </div>
             </div>
             <div class="calendar">
@@ -160,7 +160,7 @@
               <div class="monthDays" id="monthDays"></div>
             </div>
             <div class="popup">
-              <p>Пожалуйста, выберите нужного стоматолога из списка!</p>
+              <p class="popupText"></p>
             </div>
           </div>
           <div class="meetingTimeTable">
@@ -174,8 +174,9 @@
               <div class="usersTimetable"></div>
               <form action="" class="usersDataForm">
                 <h2>Введите контактную информацию</h2>
-                <input type="text" placeholder="Введите ваше имя" />
-                <input type="number" placeholder="Введите ваш номер телефона" />
+                <input type="text" placeholder="Введите ваше имя" name="name" required/>
+                <input type="tel" placeholder="Введите ваш номер телефона" name="number" required/>
+                <input type="text" placeholder="Краткое описание причины записи" name="info" />
                 <button class="saveUsersTime">Записаться</button>
               </form>
             </div>

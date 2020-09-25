@@ -129,11 +129,15 @@ currentMonth.innerHTML = currentMonthDate;
 // set current month days by weeks
 let monthDays = document.getElementById("monthDays");
 let monthName = document.getElementById("monthName");
+let popup = document.querySelector(".popup");
+let popupText = document.querySelector(".popupText");
+let clickedDay;
 let arr = [];
 
 // on change month select element
 monthName.addEventListener("change", function () {
   arr = [];
+  clickedDay = "";
   let month = monthName.value;
   let year = new Date().getFullYear();
   let dayOfWeek = new Date(month + "1," + year).getDay();
@@ -217,7 +221,6 @@ monthName.addEventListener("change", function () {
       newP.innerHTML = `<p class="day">${day}</p>`;
     }
     monthDays.appendChild(newP);
-    let clickedDay;
     let chosenDate = document.querySelector(".chosenDate");
     let chosenDoc = document.querySelector(".chosenDoc");
     let docName = document.getElementById("docName");
@@ -235,12 +238,11 @@ monthName.addEventListener("change", function () {
           selectedDay[i].classList.remove("selectedDay");
         }
         newP.classList.add("selectedDay");
-        getCalendarDates.removeAttribute("disabled");
         chosenDate.innerHTML =
           e.currentTarget.innerText + " " + monthName.options[monthName.selectedIndex].text;
         chosenDoc.innerHTML = docName.options[docName.selectedIndex].text;
       } else {
-        let popup = document.querySelector(".popup");
+        popupText.innerHTML = "Пожалуйста, выберите нужного стоматолога из списка!";
         popup.style.display = "block";
         setTimeout(function () {
           popup.style.display = "none";
@@ -255,8 +257,20 @@ let meetingTimeTable = document.querySelector(".meetingTimeTable");
 let getBack = document.querySelector(".getBack");
 // go button to the next page (day timetable)
 getCalendarDates.addEventListener("click", function () {
-  calendarDates.style.display = "none";
-  meetingTimeTable.style.display = "block";
+  if (
+    docName.options[docName.selectedIndex].text === "Выберите стоматолога" ||
+    monthName.options[monthName.selectedIndex].text === "Выберите месяц" ||
+    !clickedDay
+  ) {
+    popupText.innerHTML = "Пожалуйста, выберите нужного стоматолога из списка, месяц и дату!";
+    popup.style.display = "block";
+    setTimeout(function () {
+      popup.style.display = "none";
+    }, 1000);
+  } else {
+    calendarDates.style.display = "none";
+    meetingTimeTable.style.display = "block";
+  }
 });
 
 // second page (day timetable) get back button
@@ -327,20 +341,20 @@ let timetable = () => {
     userTimeButton.classList.add("usersTimetableBlock");
     usersTimetable.appendChild(userTimeBlock);
     userTimeBlock.appendChild(userTimeButton);
-  });
+  });  
   usersArr.map((user) => {
     let usersTimetableBlocks = document.querySelectorAll(".usersTimetableBlock");
     for (let i = 0; i < usersTimetableBlocks.length; i++) {
       if (usersTimetableBlocks[i].innerText === user.time) {
         usersTimetableBlocks[i].classList.add("userClosedTime");
         usersTimetableBlocks[i].setAttribute("disabled", "disabled");
-        // usersTimetableBlocks[i].style.cursor =
+        usersTimetableBlocks[i].style.cursor = "url('img/notAllowed.png'), auto";
       }
     }
   });
 };
 
-timetable();
+timetable();     
 
 let clickedTime;
 let usersTimetableBlocks = document.querySelectorAll(".usersTimetableBlock");
@@ -350,3 +364,13 @@ for (let i = 0; i < usersTimetableBlocks.length; i++) {
     clickedTime = e.currentTarget.innerHTML;
   });
 }
+
+let usersDataForm = document.querySelector(".usersDataForm");
+function handleForm(e) {
+  e.preventDefault();
+  let formData = new FormData(usersDataForm);
+  console.log(formData.get("name"));
+  console.log(formData.get("number"));
+  console.log(formData.get("info"));
+}
+usersDataForm.addEventListener("submit", handleForm);
