@@ -108,21 +108,24 @@ let usersArr = [];
 
 // calendar window positioning
 let registrationCalendar = document.querySelector(".registrationCalendar");
-// registrationCalendar.style.display = "block";
-let positionInfo = registrationCalendar.getBoundingClientRect();
-let height = positionInfo.height;
-let width = positionInfo.width;
-// Setting the viewport height
-let halfCvh = (window.innerHeight / 2 - height / 2) * 0.01;
-let halfCvw = (window.innerWidth / 2 - width / 2) * 0.01;
-document.documentElement.style.setProperty("--halfCvw", `${halfCvw}px`);
-document.documentElement.style.setProperty("--halfCvh", `${halfCvh}px`);
-// on viewport height change
-window.addEventListener("resize", () => {
+let timetableButton = document.querySelector(".timetable");
+timetableButton.addEventListener("click", function () {
+  registrationCalendar.style.display = "block";
+  let positionInfo = registrationCalendar.getBoundingClientRect();
+  let height = positionInfo.height;
+  let width = positionInfo.width;
+  // Setting the viewport height
   let halfCvh = (window.innerHeight / 2 - height / 2) * 0.01;
   let halfCvw = (window.innerWidth / 2 - width / 2) * 0.01;
   document.documentElement.style.setProperty("--halfCvw", `${halfCvw}px`);
   document.documentElement.style.setProperty("--halfCvh", `${halfCvh}px`);
+  // on viewport height change
+  window.addEventListener("resize", () => {
+    let halfCvh = (window.innerHeight / 2 - height / 2) * 0.01;
+    let halfCvw = (window.innerWidth / 2 - width / 2) * 0.01;
+    document.documentElement.style.setProperty("--halfCvw", `${halfCvw}px`);
+    document.documentElement.style.setProperty("--halfCvh", `${halfCvh}px`);
+  });
 });
 
 //get current date and set
