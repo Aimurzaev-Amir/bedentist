@@ -63,6 +63,17 @@ send.addEventListener("click", function (e) {
 });
 
 // CALENDAR MEETING SETTINGS
+// popup
+let popup = document.querySelector(".popup");
+let popupText = document.querySelector(".popupText");
+let popupFunction = (text) => {
+  popupText.innerHTML = text;
+  popup.style.display = "block";
+  setTimeout(function () {
+    popup.style.display = "none";
+  }, 1000);
+};
+// time and users arrays
 const timeArr = [
   {
     hour: "9:00",
@@ -160,15 +171,30 @@ currentMonth.innerHTML = currentMonthDate;
 // set current month days by weeks
 let monthDays = document.getElementById("monthDays");
 let monthName = document.getElementById("monthName");
-let popup = document.querySelector(".popup");
-let popupText = document.querySelector(".popupText");
+let chosenDate = document.querySelector(".chosenDate");
+let chosenDoc = document.querySelector(".chosenDoc");
+let docName = document.getElementById("docName");
 let clickedDay;
+let clickedMonth;
+let clickedTime;
+let clickedDoc;
 let arr = [];
+
+//on change doc name select element
+docName.addEventListener("change", function () {
+  clickedDoc = docName.options[docName.selectedIndex].value;
+});
 
 // on change month select element
 monthName.addEventListener("change", function () {
+  //clear array of previous month days
   arr = [];
+  // clear previous clicked day
   clickedDay = "";
+  // clear month days before set new month days
+  monthDays.innerHTML = "";
+
+  // get days or week for clicked month
   let month = monthName.value;
   let year = new Date().getFullYear();
   let dayOfWeek = new Date(month + "1," + year).getDay();
@@ -213,9 +239,10 @@ monthName.addEventListener("change", function () {
   }
 
   // change month on select changing
+  clickedMonth = monthName.options[monthName.selectedIndex].value;
   currentMonth.innerHTML = monthName.options[monthName.selectedIndex].text;
 
-  // get last day of month
+  // get last day of month to create array of days for clicked month
   let fullLastDateArray = new Date(year, numberMonth + 1, 0).toString().split(" ");
   for (let i = 1; i <= fullLastDateArray[2]; i++) {
     arr.push(i);
@@ -236,10 +263,7 @@ monthName.addEventListener("change", function () {
     arr.unshift(0, 0, 0, 0, 0, 0);
   }
 
-  // clear month days before set new month days
-  monthDays.innerHTML = "";
-
-  //create for each day block and paragraph
+  //create for each day from array block and paragraph
   arr.forEach((day) => {
     let newP = document.createElement("div");
     newP.classList.add("monthDayBlock");
@@ -252,9 +276,6 @@ monthName.addEventListener("change", function () {
       newP.innerHTML = `<p class="day">${day}</p>`;
     }
     monthDays.appendChild(newP);
-    let chosenDate = document.querySelector(".chosenDate");
-    let chosenDoc = document.querySelector(".chosenDoc");
-    let docName = document.getElementById("docName");
 
     // on day number click action
     newP.addEventListener("click", function (e) {
@@ -273,50 +294,15 @@ monthName.addEventListener("change", function () {
           e.currentTarget.innerText + " " + monthName.options[monthName.selectedIndex].text;
         chosenDoc.innerHTML = docName.options[docName.selectedIndex].text;
       } else {
-        popupText.innerHTML = "Пожалуйста, выберите нужного стоматолога из списка!";
-        popup.style.display = "block";
-        setTimeout(function () {
-          popup.style.display = "none";
-        }, 1000);
+        popupFunction("Пожалуйста, выберите нужного стоматолога из списка!");
       }
     });
   });
 });
 
-let calendarDates = document.querySelector(".calendarDates");
-let meetingTimeTable = document.querySelector(".meetingTimeTable");
-let getBack = document.querySelector(".getBack");
-// go button to the next page (day timetable)
-getCalendarDates.addEventListener("click", async function () {
-  if (
-    docName.options[docName.selectedIndex].text === "Выберите стоматолога" ||
-    monthName.options[monthName.selectedIndex].text === "Выберите месяц" ||
-    !clickedDay
-  ) {
-    popupText.innerHTML = "Пожалуйста, выберите нужного стоматолога из списка, месяц и дату!";
-    popup.style.display = "block";
-    setTimeout(function () {
-      popup.style.display = "none";
-    }, 1000);
-  } else {
-    calendarDates.style.display = "none";
-    meetingTimeTable.style.display = "block";
-    let data = await MeetingsAPI.getAllMeetings();
-    usersArr = data;
-    if (usersArr.length !== 0) {
-      timetable();
-    }
-  }
-});
-
-// second page (day timetable) get back button
-getBack.addEventListener("click", function () {
-  calendarDates.style.display = "block";
-  meetingTimeTable.style.display = "none";
-});
-
 let usersTimetable = document.querySelector(".usersTimetable");
 let timetable = () => {
+  usersTimetable.innerHTML = "";
   timeArr.map((time) => {
     let userTimeBlock = document.createElement("div");
     let userTimeButton = document.createElement("button");
@@ -324,6 +310,14 @@ let timetable = () => {
     userTimeButton.classList.add("usersTimetableBlock");
     usersTimetable.appendChild(userTimeBlock);
     userTimeBlock.appendChild(userTimeButton);
+    userTimeButton.addEventListener("click", function (e) {
+      clickedTime = e.currentTarget.innerHTML;
+      let choosedTime = document.getElementsByClassName("choosedTime");
+      for (let i = 0; i < choosedTime.length; i++) {
+        choosedTime[i].classList.remove("choosedTime");
+      }
+      userTimeButton.classList.add("choosedTime");
+    });
   });
   usersArr.map((user) => {
     let usersTimetableBlocks = document.querySelectorAll(".usersTimetableBlock");
@@ -337,34 +331,58 @@ let timetable = () => {
   });
 };
 
-let clickedTime;
-let usersTimetableBlocks = document.querySelectorAll(".usersTimetableBlock");
+let calendarDates = document.querySelector(".calendarDates");
+let meetingTimeTable = document.querySelector(".meetingTimeTable");
+let getBack = document.querySelector(".getBack");
+// go button to the next page (day timetable)
+getCalendarDates.addEventListener("click", async function () {
+  if (
+    docName.options[docName.selectedIndex].text === "Выберите стоматолога" ||
+    monthName.options[monthName.selectedIndex].text === "Выберите месяц" ||
+    !clickedDay
+  ) {
+    popupFunction("Пожалуйста, выберите нужного стоматолога из списка, месяц и дату!");
+  } else {
+    calendarDates.style.display = "none";
+    meetingTimeTable.style.display = "block";
+    let data = await MeetingsAPI.getMeetingsData(clickedDoc, clickedDay, clickedMonth);
+    usersArr = data;
+    timetable();
+  }
+});
 
-for (let i = 0; i < usersTimetableBlocks.length; i++) {
-  usersTimetableBlocks[i].addEventListener("click", function (e) {
-    clickedTime = e.currentTarget.innerHTML;
-    let choosedTime = document.getElementsByClassName("choosedTime");
-    for (let i = 0; i < choosedTime.length; i++) {
-      choosedTime[i].classList.remove("choosedTime");
-    }
-    usersTimetableBlocks[i].classList.add("choosedTime");
-  });
-}
+// second page (day timetable) get back button
+getBack.addEventListener("click", function () {
+  calendarDates.style.display = "block";
+  meetingTimeTable.style.display = "none";
+});
 
 let usersDataForm = document.querySelector(".usersDataForm");
-async function handleForm(e) {
-  e.preventDefault();
-  let formData = new FormData(usersDataForm);
-  console.log(formData.get("name"));
-  console.log(formData.get("number"));
-  console.log(formData.get("info"));
-  await MeetingsAPI.createMeeting(
-    formData.get("name"),
-    clickedDay,
-    "September",
-    clickedTime,
-    formData.get("number"),
-    formData.get("info")
-  );
-}
 usersDataForm.addEventListener("submit", handleForm);
+
+async function handleForm(e) {
+  if (clickedTime !== undefined) {
+    e.preventDefault();
+    let formData = new FormData(usersDataForm);
+    await MeetingsAPI.createMeeting(
+      formData.get("name"),
+      clickedDay,
+      clickedMonth,
+      clickedTime,
+      clickedDoc,
+      formData.get("number"),
+      formData.get("info")
+    );
+    let data = await MeetingsAPI.getMeetingsData(clickedDoc, clickedDay, clickedMonth);
+    usersArr = data;
+    timetable();
+    usersDataForm.reset();
+    popupFunction(
+      "Спасибо за доверие! Ваша консультация зарегистрирована! Для изменения данных регистрации пройдите в личный кабинет!"
+    );
+    clickedTime = undefined;
+  } else {
+    e.preventDefault();
+    popupFunction("Пожалуйста, выберите свободное время приема!");
+  }
+}

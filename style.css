@@ -890,6 +890,7 @@ hr {
 .saveUsersTime {
   background-color: #2a93c9;
   color: #fff;
+  cursor: pointer;
 }
 .choosedTime {
   background-color: green;

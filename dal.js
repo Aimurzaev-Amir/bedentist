@@ -2,8 +2,8 @@ const instance = axios.create({
   baseURL: "/api/meetings",
 });
 const MeetingsAPI = {
-  getMeetingsData(date) {
-    return instance.get("/getMeeting/" + date).then((response) => {
+  getMeetingsData(docName, date, month) {
+    return instance.get("/getMeeting/" + docName + "/" + date + "/" + month).then((response) => {
       return response.data;
     });
   },
@@ -12,9 +12,9 @@ const MeetingsAPI = {
       return response.data;
     });
   },
-  createMeeting(userName, date, month, time, number, info) {
+  createMeeting(userName, date, month, time, docName, number, info) {
     return instance
-      .post("/create", { userName, date, month, time, number, info })
+      .post("/create", { userName, date, month, time, docName, number, info })
       .then((response) => {
         return response.data;
       });
