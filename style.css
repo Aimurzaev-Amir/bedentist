@@ -4,11 +4,9 @@
   font-family: "Roboto", sans-serif;
 }
 
-body,
-html {
-  overflow: auto;
+.bodyFixed {
+  overflow-y: hidden;
 }
-
 nav {
   margin: 0 auto;
   max-width: 1100px;
@@ -256,7 +254,7 @@ header {
   border-radius: 4px;
   text-decoration: none;
 }
-.welcome-button {
+.welcomeButton {
   cursor: pointer;
 }
 .service {
@@ -409,6 +407,12 @@ header {
   justify-content: center;
   align-items: center;
   margin-top: 100px;
+}
+.registration p{
+  margin-top: 31px;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 150%;
 }
 .registration img {
   width: 47%;
@@ -664,43 +668,8 @@ hr {
   font-size: 14px;
   line-height: 16px;
 }
-.messageSend {
-  display: none;
-  position: fixed;
-  top: calc(var(--halfvh, 1vh) * 100);
-  left: calc(var(--halfvw, 1vh) * 100);
-}
-.messageWindow {
-  width: 600px;
-  height: 300px;
-  border-radius: 30px;
-  border: 3px solid #2a93c9;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
-.messageWindow h4 {
-  margin: 15px 0 15px 0;
-}
-.messageWindow p {
-  margin-bottom: 20px;
-}
-.img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100px;
-  height: 100px;
-}
-.doneImage {
-  display: none;
-}
-
 .registrationCalendar {
   display: none;
-  overflow: hidden;
   position: fixed;
   width: 890px;
   height: 605px;
@@ -710,6 +679,7 @@ hr {
   padding: 34px 53px;
   top: calc(var(--halfCvh, 1vh) * 100);
   left: calc(var(--halfCvw, 1vh) * 100);
+  z-index: 9999;
 }
 .calendarOptios label {
   margin-right: 12px;
@@ -895,6 +865,32 @@ hr {
 .choosedTime {
   background-color: green;
 }
+.close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 23px;
+  height: 23px;
+  cursor: pointer;
+}
+.close:hover {
+  opacity: 1;
+}
+.close:before,
+.close:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 23px;
+  width: 2px;
+  background-color: #2a93c9;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}
 
 @media screen and (min-width: 769px) and (max-width: 1099px) {
   header {
@@ -967,6 +963,7 @@ hr {
   /* Main menu positionning */
   .bodyFixed {
     position: fixed;
+    overflow-y: hidden !important;
   }
   .main-nav {
     position: absolute;

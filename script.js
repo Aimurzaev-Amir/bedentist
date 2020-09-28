@@ -28,41 +28,12 @@ for (let i = 0; i < navLink.length; i++) {
 }
 
 let doneImage = document.getElementById("doneImage");
-let send = document.getElementById("send");
+// let send = document.getElementById("send");
 let loading = document.getElementById("loading");
 let messageSend = document.querySelector(".messageSend");
 
-send.addEventListener("click", function (e) {
-  e.preventDefault();
-  messageSend.style.display = "block";
-  centerPosition(".messageWindow");
-  let messageWindow = document.querySelector(".messageWindow");
-  let positionInfo = messageWindow.getBoundingClientRect();
-  let height = positionInfo.height;
-  let width = positionInfo.width;
-  // Setting the viewport height
-  let halfvh = (window.innerHeight / 2 - height / 2) * 0.01;
-  let halfvw = (window.innerWidth / 2 - width / 2) * 0.01;
-  document.documentElement.style.setProperty("--halfvw", `${halfvw}px`);
-  document.documentElement.style.setProperty("--halfvh", `${halfvh}px`);
-  // on viewport height change
-  window.addEventListener("resize", () => {
-    let halfvh = (window.innerHeight / 2 - height / 2) * 0.01;
-    let halfvw = (window.innerWidth / 2 - width / 2) * 0.01;
-    document.documentElement.style.setProperty("--halfvw", `${halfvw}px`);
-    document.documentElement.style.setProperty("--halfvh", `${halfvh}px`);
-  });
-  setTimeout(function () {
-    doneImage.style.display = "block";
-    loading.style.display = "none";
-    document.getElementById("registration-form").reset();
-    setTimeout(function () {
-      messageSend.style.display = "none";
-    }, 1000);
-  }, 2000);
-});
-
 // CALENDAR MEETING SETTINGS
+
 // popup
 let popup = document.querySelector(".popup");
 let popupText = document.querySelector(".popupText");
@@ -105,27 +76,36 @@ const timeArr = [
 ];
 
 let usersArr = [];
-
 // calendar window positioning
 let registrationCalendar = document.querySelector(".registrationCalendar");
-let timetableButton = document.querySelector(".timetable");
-timetableButton.addEventListener("click", function () {
-  registrationCalendar.style.display = "block";
-  let positionInfo = registrationCalendar.getBoundingClientRect();
-  let height = positionInfo.height;
-  let width = positionInfo.width;
-  // Setting the viewport height
-  let halfCvh = (window.innerHeight / 2 - height / 2) * 0.01;
-  let halfCvw = (window.innerWidth / 2 - width / 2) * 0.01;
-  document.documentElement.style.setProperty("--halfCvw", `${halfCvw}px`);
-  document.documentElement.style.setProperty("--halfCvh", `${halfCvh}px`);
-  // on viewport height change
-  window.addEventListener("resize", () => {
+let calendarBackgroundBlock = document.querySelector(".calendarBackgroundBlock");
+let timetableButton = document.querySelectorAll(".timetable");
+for (let i = 0; i < timetableButton.length; i++) {
+  timetableButton[i].addEventListener("click", function () {
+    registrationCalendar.style.display = "block";
+    let positionInfo = registrationCalendar.getBoundingClientRect();
+    let height = positionInfo.height;
+    let width = positionInfo.width;
+    // Setting the viewport height
     let halfCvh = (window.innerHeight / 2 - height / 2) * 0.01;
     let halfCvw = (window.innerWidth / 2 - width / 2) * 0.01;
     document.documentElement.style.setProperty("--halfCvw", `${halfCvw}px`);
     document.documentElement.style.setProperty("--halfCvh", `${halfCvh}px`);
+    body.classList.add("bodyFixed");
+    // on viewport height change
+    window.addEventListener("resize", () => {
+      let halfCvh = (window.innerHeight / 2 - height / 2) * 0.01;
+      let halfCvw = (window.innerWidth / 2 - width / 2) * 0.01;
+      document.documentElement.style.setProperty("--halfCvw", `${halfCvw}px`);
+      document.documentElement.style.setProperty("--halfCvh", `${halfCvh}px`);
+    });
   });
+}
+
+let closeCalendar = document.querySelector(".close");
+closeCalendar.addEventListener("click", function () {
+  registrationCalendar.style.display = "none";
+  body.classList.remove("bodyFixed");
 });
 
 //get current date and set
@@ -188,8 +168,7 @@ docName.addEventListener("change", function () {
   clickedDoc = docName.options[docName.selectedIndex].value;
 });
 
-// on change month select element
-monthName.addEventListener("change", function () {
+function setMonthDays() {
   //clear array of previous month days
   arr = [];
   // clear previous clicked day
@@ -198,7 +177,7 @@ monthName.addEventListener("change", function () {
   monthDays.innerHTML = "";
 
   // get days or week for clicked month
-  let month = monthName.value;
+  let month = monthName.value === "Выберите месяц" ? "September" : monthName.value ;
   let year = new Date().getFullYear();
   let dayOfWeek = new Date(month + "1," + year).getDay();
 
@@ -301,7 +280,9 @@ monthName.addEventListener("change", function () {
       }
     });
   });
-});
+}
+// on change month select element
+monthName.addEventListener("change", setMonthDays);
 
 let usersTimetable = document.querySelector(".usersTimetable");
 let timetable = () => {
