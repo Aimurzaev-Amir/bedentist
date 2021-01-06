@@ -27,6 +27,6 @@
   },
   "homepage": "https://github.com/Aimurzaev-Amir/bedentist#readme",
   "dependencies": {
-    "axios": "^0.20.0"
+    "axios": "^0.21.1"
   }
 }
